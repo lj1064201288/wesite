@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+{% block title %}发布心情{% endblock %}
+
+{% block style %}
+<script>
+    $(function () {
+        $('.captcha').click(function () {
+            $.getJSON('/captcha/refresh/',function (result) {
+                $('.captcha').attr('src',result['image_url']);
+                $('#id_captcha_0').val(result['key']);
+            });
+        });
+    });
+</script>
+<style>
+    .form-input{
+        width: 18px;
+        height: 18px;
+        position: relative;
+        top: 4px;
+    }
+    label, b{
+        display: inline;
+    }
+    #id_message-wmd-wrapper{
+        margin:15px 0;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+
+        <div class="row">
+            <div class="col-2 first">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                      <a class="nav-link" href="/diary">查看日记</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="/diary/post2db">发布心情</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="/diary/post">记录日记</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="/diary/list">心情广场</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-10">
+                <div class="panel panel-success title">
+                    <div class="panel-heading" align="center">
+                        <h3>发布心情</h3>
+                    </div>
+                </div>
+                 {% if message %}
+                    <div class="alert alert-warning" align="center">{{message}}</div>
+                 {% endif %}
+                <form action="." method="post" name="myform">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label class="control-label" for="id-mood"><b>选择心情:</b>
+                        {{post_form.mood}}
+                        </label>
+
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="id_nickname"><b>昵称:</b></label>
+                        {{post_form.nickname}}
+                    </div>
+                     <div class="form-group">
+                         {{post_form.media}}
+                        <label class="label-info" for="id_message"><b>心情留言:</b></label>
+
+                         {{post_form.message}}
+                    </div>
+                    <div class="form-group">
+                        <label class="form-check-label" for="id_enabled">
+                             <b>是否在心情广场呈现：</b>
+                            <input id="id_enabled" name="enabled" type="checkbox" class="form-input">
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label for="id_del_pass" class="control-label"><b>设置密码:</b></label>
+                        {{post_form.del_pass}}
+                    </div>
+                    <div class="form-group">
+                        <label for="id_captcha_1"><b>验证码:</b></label>
+                        {{post_form.captcha}}
+                    </div>
+                    <input type="submit" value="提交" class="btn btn-success">
+                    <input type="reset" value="清除数据" class="btn btn-info">
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+{% endblock %}

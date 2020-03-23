@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block title %}分享日记{% endblock %}
+{% block content %}
+<div class="container">
+    {% for message in messages %}
+        <div class="alert alert-{{message.tags}}">{{message}}</div>
+    {% endfor %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3>用户信息</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    {{username | upper}}
+                </div>
+                <div class="panel-body">
+                    昵称: {{profile.nickname}}<br />
+                    电子邮件:{{profile.email}}<br />
+                    身高:{{profile.height}}cm<br />
+                    性别:{{profile.get_sex_display}}<br />
+                    个人网站: <a href="{{profile.websie}}"></a> {{profile.website}}<br />
+                </div>
+            </div>
+        </div>
+    </div>
+    <form action="." name="myform" method="POST">
+        {% csrf_token %}
+        <table>
+            {{profile_form.as_table}}
+        </table>
+        <input type="submit" value="修改个人资料">
+    </form>
+</div>
+{% endblock %}

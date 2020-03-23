@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% block title %}心情广场{% endblock %}
+{% block style %}
+
+<script>
+    $(function () {
+        panels = [
+            'panel panel-success title',
+            'panel panel-primary title',
+            'panel panel-danger title',
+            'panel panel-info title',
+            'panel panel-waring title'
+        ];
+        setInterval(function () {
+            $('.title').attr('class', panels[Math.round(Math.random()*(panels.length-1))])
+        }, 1000)
+    });
+</script>
+{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-2 first">
+             <ul class="nav flex-column">
+                 <li class="nav-item">
+                      <a class="nav-link" href="/diary">查看日记</a>
+                 </li>
+                 <li class="nav-item">
+                     <a class="nav-link" href="/diary/post2db">发布心情</a>
+                 </li>
+                 <li class="nav-item">
+                     <a class="nav-link" href="/diary/post">记录日记</a>
+                 </li>
+                 <li class="nav-item">
+                     <a class="nav-link" href="/diary/list">心情广场</a>
+                 </li>
+            </ul>
+        </div>
+        <div class="col-md-10">
+            <div class="panel panel-success title">
+                <div class="panel-heading" align="center">
+                    <h3>心情广场</h3>
+                </div>
+            </div>
+            {% for p in posts %}
+                {% cycle  '<div class="row"> <div class="col-md-12">' '<div class="col-md-12">' %}
+                    <div class="panel {% cycle 'panel-primary' 'panel-info' 'panel-warning' 'panel-success' %}">
+                        <div class="panel-heading">
+                            <table width="100%">
+                                <tr>
+                                    <td>【{{p.nickname}}】觉得{{p.mood.status}}</td>
+                                    <td align="right">
+
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="panel-body" style="overflow: hidden">
+                             {% autoescape off %}
+                                {{p.message_html|linebreaks}}
+                             {% endautoescape %}
+                        </div>
+                        <div class="panel-footer">
+                            <div align="right">
+                                <i>
+                                    <small>{{p.pub_time}}</small>
+                                </i>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                {% cycle '' '</div>' %}
+            {% endfor %}
+        </div>
+    </div>
+
+{% endblock %}

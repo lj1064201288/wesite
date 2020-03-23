@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>汉诺塔</title>
+    <script>
+        function hnt(a, b, c, num){
+            if(num == 1){
+                console.log(a + "--->" + b);
+            }if(num == 2){
+                console.log(a + '--->' + c);
+                console.log(a + '--->' + b);
+                console.log(c + '--->' + b);
+            } else{
+                hnt(a, b, c, num-1);
+                console.log(a + '--->'+ c);
+                hnt(a, c, b, num-1);
+            }
+        }
+
+        hnt('A', 'B', 'C', 3);
+
+    </script>
+</head>
+<body>
+
+</body>
+</html>

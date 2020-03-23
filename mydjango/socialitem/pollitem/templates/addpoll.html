@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% block title %}发布话题{% endblock %}
+{% block content %}
+<div class="container">
+    {% for message in messages %}
+        <div class="alert alert-{{message.tags}}">{{message}}</div>
+    {% endfor %}
+    <div class="row">
+        <div class="col-md-12">
+           <div class="panel panel-success">
+               <div class="panel-heading" align="center">
+                   <h3>添加投票项</h3>
+               </div>
+           </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <form action="." method="post">
+                {% csrf_token %}
+                {{forms.as_p}}
+                <input type="submit" value="提交">
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading" align="center">
+                    <h3>我的投票项</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        {% for poll in polls %}
+            {% if forloop.first %}
+                <div class="list-group">
+            {% endif %}
+                    <a href="{% url 'addpollitem-url' poll.id %}" class="list-group-item">{{poll.name}}</a>
+            {% empty %}
+                <p>你还尚未发布话题</p>
+            {% if forloop.last %}
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

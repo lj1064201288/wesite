@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>循环书写表格</title>
+    <script>
+        var line = 0;
+        document.write('<table border="1" width="300px">');
+        while(line<10){
+            document.write('<tr>');
+            var i = 0;
+            while(i<10){
+                document.write('<td>'+i+'</td>');
+                i++;
+            }
+            document.write('</tr>');
+            line++;
+        }
+        document.write('</table>');
+    </script>
+</head>
+<body>
+</body>
+</html>

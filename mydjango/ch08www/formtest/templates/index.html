@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% block title %}我有话要说{% endblock %}
+{% block content %}
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    {% if message %}
+                    <div class="alert alert-waring">{{message}}</div>
+                    {% elif pw %}
+                    <div class="alert alert-warning">成功存储！ 请记得您的密码为[<span style="color: red">{{pw}}</span>
+                        ], 信息徐经核实后才会显示
+                    </div>
+                    {% endif %}
+                    <div class="panel-heading" align="center">
+                        <form action="/" method="get" name="my form">
+                            现在的心情:<br />
+                            {% for mood in moods %}
+                            <input type="radio" name="user_mood" value="{{mood}}">{{mood}}
+                            {% endfor %}
+                            <br />
+                            <h4>心情留言板:</h4>
+                            <textarea name="user_post" rows="3" cols="70"></textarea><br />
+                            <label for="user_id">您的昵称:</label>
+                            <input type="text" name="user_id" id="user_id">
+                            <label for="user_pass">张贴密码:</label>
+                            <input type="password" name="user_pass" id="user_pass">
+                            <input type="submit" value="张贴" id="send">
+                            <input type="reset" value="重新输入">
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% for p in posts %}
+            {% cycle '<div class="row"> <div class="col-md-4">' '<div class="col-md-4">' '<div class="col-md-4">' %}
+                <div class="panel panel-primary">
+                    <div class="panel-heading">【{{p.nickname}}】</div>
+                    <div class="panel-body" style="overflow: hidden">{{p.message|linebreaks}}</div>
+                    <div class="panel-footer" align="right">
+                        <div style="width: 50px; height: 20px; background-color: aqua; color: red; font-size: 14px; float: left;" align="center">
+                            <b>{{p.mood.status}}</b></div>
+                        <i><small>{{p.pub_time}}</small></i> &nbsp
+                        <span class="glyphicon glyphicon-trash" onclick="go_delete({{p.id}})"></span>
+                    </div>
+                </div>
+            </div>
+            {% cycle "" "" "</div>" %}
+        {% endfor %}
+{% endblock %}

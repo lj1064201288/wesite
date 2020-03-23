@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+{% block title %}我有话要说{% endblock %}
+{% block content %}
+        <div class="row">
+            <div class="row">
+                <div class="col-2 first">
+
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                              <a class="nav-link" href="/diary">查看日记</a>
+                            </li>
+                        <li class="nav-item">
+                          <a class="nav-link" href="/diary/post2db">发布心情</a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" href="/diary/post">记录日记</a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" href="/diary/list">心情广场</a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" href="/diary/mymood">我的心情</a>
+                        </li>
+                    </ul>
+                </div>
+            <div class="col-10">
+                <div class="panel panel-default">
+                    {% if message %}
+                    <div class="alert alert-waring">{{message}}</div>
+                    {% elif pw %}
+                    <div class="alert alert-warning">成功存储！ 请记得您的密码为[<span style="color: red">{{pw}}</span>
+                        ], 信息徐经核实后才会显示
+                    </div>
+                    {% endif %}
+                    <div class="panel-heading">
+                      <form action="." method="post" name="myform">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label class="control-label" for="id-mood"><b>选择心情:</b>
+                                    <select id="id_mood" name="mood" class="form-control" style="width: 200px">
+                                    <option value="1" selected>开心</option>
+                                    <option value="2">伤心</option>
+                                    <option value="3">悲伤</option>
+                                    <option value="4">愤怒</option>
+                                    <option value="5">快乐</option>
+                                    <option value="6">愉悦</option>
+                                </select>
+                                </label>
+
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label" for="id_nickname"><b>昵称:</b></label>
+                                <input id="id_nickname" maxlength="20" name="nickname" class="form-control" type="text" value="" placeholder=输入昵称 style="width: 200px">
+                            </div>
+                             <div class="form-group">
+                                <label class="label-info" for="id_message"><b>心情留言:</b></label>
+                                <textarea cols="40" id="id_message" name="message" rows="10" class="form-control" style="width: 400px; height: 100px"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-check-label" for="id_enabled">
+                                     <b>是否在心情广场呈现：</b>
+                                    <input id="id_enabled" name="enabled" type="checkbox" class="form-input">
+                                </label>
+                            </div>
+                            <div class="form-group">
+                                <label for="id_del_pass" class="control-label"><b>设置密码:</b></label>
+                                <input id="id_del_pass" maxlength="10" name="del_pass" type="text" value="123456" class="form-control" style="width: 200px">
+                            </div>
+                            <div class="form-group">
+                                <label for="id_captcha_1"><b>验证码:</b></label>
+                                {{post_form.captcha}}
+                            </div>
+                          <input type="submit" value="提交" class="btn btn-success">
+                          <input type="reset" value="清除数据" class="btn btn-info">
+                      </form>
+
+                    </div>
+                </div>
+                {% for p in posts %}
+                {% cycle '<div class="row"> <div class="col-6">' '<div class="col-6">' '<div class="col-6">' %}
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">【{{p.nickname}}】</div>
+                        <div class="panel-body" style="overflow: hidden">{{p.message|linebreaks}}</div>
+                        <div class="panel-footer" align="right">
+                            <div style="width: 50px; height: 20px; background-color: aqua; color: red; font-size: 14px; float: left;" align="center">
+                                <b>{{p.mood.status}}</b></div>
+                            <i><small>{{p.pub_time}}</small></i> &nbsp
+                            <span class="glyphicon glyphicon-trash" onclick="go_delete({{p.id}})"></span>
+                        </div>
+                    </div>
+                </div>
+                {% cycle "" "" "</div>" %}
+            {% endfor %}
+            </div>
+        </div>
+
+{% endblock %}

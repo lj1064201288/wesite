@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>递归函数</title>
+    <script>
+        function recursion(num){
+            // 打印需要处理的形参
+            console.log(num);
+            // 如果形参大于0，那么继续回调自己处理
+            if(num > 0){
+                recursion(num-1);
+            }else{
+                // 如果形参不满足条件。执行
+                console.log('-------------');
+            }
+            // 打印处理完毕后的形参
+            console.log(num);
+        }
+        recursion(5);
+    </script>
+</head>
+<body>
+
+</body>
+</html>

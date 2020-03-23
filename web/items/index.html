@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>模拟淘宝商城主页</title>
+    <style>
+        body, button, input, select, textarea {
+        font: 12px/1.5 tahoma,arial,'Hiragino Sans GB','\5b8b\4f53',sans-serif;
+        font-style: normal;
+        font-variant-ligatures: normal;
+        font-variant-caps: normal;
+        font-variant-numeric: normal;
+        font-variant-east-asian: normal;
+        font-weight: normal;
+        font-stretch: normal;
+        /*font-size: 12px;*/
+        /*line-height: 1.5;*/
+        font-family: tahoma, arial, "Hiragino Sans GB", 宋体, sans-serif;
+        }
+        body{
+            overflow-x: hidden;
+        }
+        .top-info{
+            height: 146px;
+            display: block;
+            color: #3C3C3C;
+        }
+        .site-nav-bd{
+            height: 35px;
+            background-color: #f5f5f5;
+        }
+        .vip-advertisement{
+            height:100px;
+            background-color: #613621;
+            color: white;
+        }
+        .center{
+            height: 130px;
+            color: #3C3C3C;
+            display: block;
+        }
+        .log{
+            widows: 190;
+            height: 80px;
+            display: block;
+            float: left;
+            margin-top: 8px;
+        }
+        .serch-box{
+            width: 627px;
+            height: 87px;
+            display: block;
+            position: relative;
+            margin-left: 218px;
+            margin-right: 145px;
+        }
+        #J_SearchTab{
+            width: 610px;
+            height:22px;
+            margin-left: 17px;
+            font-style: normal;
+        }
+        .ks-switchable-nav{
+            color: #3C3C3C;
+            display: block;
+            width: 610px;
+            list-style: none;
+
+        }
+        .J_serchTab{
+            width: 36px;
+            height: 22px;
+            margin: 4px;
+            font-size: 12px;
+            background-repeat: no-repeat;
+            color: red;
+            float: left;
+        }
+        .J_TSearchForm{
+            width: 627px;
+            height: 40px;
+            display: block;
+            position: relative;
+            font-size: 12px;
+        }
+        .search-panel-fields{
+            margin-right: 74px;
+            border: 2px solid #ff5000;
+            border-top-left-radius: 20px;
+            border-bottom-left-radius: 20px;
+            border-right: none;
+            overflow: hidden;
+            height: 36px;
+        }
+        .search-warp{
+            width: 610px;
+            height: 22px;
+            display: block;
+            color: #3C3C3C;
+            margin: 17px;
+            float: initial;
+        }
+        .search-button {
+            position: absolute;
+            right: 0;
+            top: 0;
+            z-index: 100;
+            width: 74px;
+            height: 40px;
+            overflow: hidden;
+            text-align: center;
+            border-top-right-radius: 20px;
+            border-bottom-right-radius: 20px;
+        }
+        .btn-search {
+            font-size: 18px;
+            font-weight: 700;
+            color: #FFF;
+            background-color: #FF4200;
+            cursor: pointer;
+            height: 100%;
+            border: none;
+            width: 100%;
+        }
+        .search-common-panel {
+            margin-right: 74px;
+            /*border: 2px solid #ff5000;*/
+            border-top-left-radius: 20px;
+            border-bottom-left-radius: 20px;
+            border-right: none;
+            overflow: hidden;
+            height: 36px;
+        }
+        #q{
+            width: 472px;
+            height: 24px;
+            padding-top: 6px;
+            padding-bottom: 6px;
+            border: none;
+            background: #FFF;
+            line-height: 24px;
+            outline: 0;
+            text-indent:10px;
+        }
+        /*.tb-ifont.J_SearchIcon{*/
+            /*width: 16px;*/
+            /*height: 24px;*/
+            /*position: absolute;*/
+            /*top: 9px;*/
+            /*left: 24px;*/
+            /*color: #666;*/
+            /*z-index: 2;*/
+            /*font-size: 16px;*/
+            /*font-family: iconfont!important;*/
+        /*}*/
+        .search-ft{
+            width: 586px;
+            height:46px;
+            position: relative;
+            padding: 5px 41px 0 0;
+            overflow: hidden;
+        }
+        .model{
+            height: 30px;
+            min-height: 0;
+            background-color: transparent;
+        }
+        .tb-bg{
+            margin: 0 auto;
+            height: 30px;
+            line-height: 30px;
+            position: relative;
+            color: #FFF;
+            background-image: linear-gradient(to right,#ff9000 0,#ff5000 100%);
+            background-repeat: repeat-x;
+            font-size: 12px;
+            display: block;
+            overflow-x: hidden;
+            /*text-align: center;*/
+        }
+        .nva-hd{
+            font-size: 16px;
+            font-weight: 700;
+            list-style: none;
+            position: relative;
+            float: left;
+            z-index: 5;
+            line-height: 30px;
+            margin: 0;
+            padding: 0;
+            list-style-position: initial;
+        }
+        .nva-bd{
+            font-size: 14px;
+            font-weight: 700;
+            list-style: none;
+            position: relative;
+            float: left;
+            z-index: 5;
+            line-height: 30px;
+            margin: 0;
+            padding: 0;
+            display: block;
+            list-style-position: outside;
+            min-width: 354.33px;
+        }
+        a{
+            color: inherit;
+            /*padding: 0 5px;*/
+            cursor: pointer;
+            text-decoration: none;
+        }
+        li{
+            margin: 0 3px;
+            padding: 0 4px;
+            display: list-item;
+            position: relative;
+            float: left;
+        }
+
+        #ti{
+            float: left;
+            text-align: center;
+            width: 190px;
+            font-size: 16px;
+            background: #ff5000;
+            margin: 0;
+            padding: 0;
+        }
+        .pipe{
+            margin: 0;
+            padding: 0;
+            margin-left: 7px;
+
+        }
+        .nva-bd .last{
+            display: none;
+        }
+        .screen{
+            width: auto;
+            height: 632px;
+            max-height: 632px;
+            margin: 0;
+            overflow: visible;
+        }
+        .main{
+            height: 100%;
+            float: left;
+            clear: left;
+
+        }
+
+        div{
+            display: block;
+        }
+        .main-inner{
+            height: 522px;
+        }
+        .tbn-models{
+            width: 190px;
+            height: 522px;
+            position: relative;
+            float: left;
+            background-color: cyan;
+        }
+        .core.J_Core{
+            margin-left: 10px;
+            margin-top: 10px;
+            overflow: hidden;
+            width: 492px;
+            float: left;
+            height: 512px;
+            background-color: red;
+        }
+        .J_Module{
+            min-width: 0;
+        }
+        .adv{
+            width: 690px;
+            height: 100px;
+            background-color: yellow;
+            min-height: 0;
+            margin-top: 10px;
+        }
+        .login-sytem{
+            background-image: url("data:image/png;base64,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");
+            background-size: 290px 145px;
+            background-repeat: no-repeat;
+            background-position: 0 0;
+        }
+        .cup-right{
+            width: 290px;
+            max-height: 632px;
+            margin-top: 10px;
+            position: relative;
+            overflow: hidden;
+            float: right;
+        }
+        .member{
+            width: 290px;
+            height: 132px;
+            padding: 3px 0 10px 0;
+            padding-right: inherit;
+            /*text-align: center;*/
+
+        }
+        .member-bd{
+            position: relative;
+            height: 91px;
+        }
+        .avatar-wrapper{
+            display: block;
+            margin: 0 auto;
+            width: 74px;
+            height: 56px;
+            text-align: center;
+
+        }
+        .member-home{
+            padding: 0;
+            display: inline-block;
+            border: 3px solid #FFFFFF;
+            border-radius: 50%;
+            background-clip: padding-box;
+            width: 50px;
+            height: 50px;
+            line-height: 50px;
+            overflow: hidden;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .member-avatar{
+            border: 0;
+            width: 50px;
+            height: 50px;
+            line-height: 50px;
+        }
+        .member-nick-info{
+            height: 17px;
+            line-height: 17px;
+            display: block;
+            text-align: center;
+        }
+        .nick-member{
+            font-weight: 400;
+        }
+        .member-tjb{
+            height: 17px;
+            line-height: 17px;
+            text-align: center;
+        }
+        p{
+            margin: 0;
+            padding: 0;
+        }
+        .J_MemberPunch.h{
+            display: inline-block;
+            border-radius: 9px;
+            background-clip: padding-box;
+            background-color: #ffe4db;
+            padding: 0 10px 0 20px;
+            position: relative;
+            border: none;
+        }
+        .h{
+            color: #ff5000!important;
+        }
+        .tbh-icon{
+            position: absolute;
+            top: 0;
+            display: block;
+            left: 0;
+            height: 16px;
+            width: 16px;
+            vertical-align: middle;
+            background: url("https://img.alicdn.com/tfs/TB1eiXTXlTH8KJjy0FiXXcRsXXa-24-595.png");
+        }
+        .club{
+            margin-left: 1px;
+        }
+        .tbh-member.club.tbh-icon{
+            background-position: 0 -528px;
+        }
+        .tbh-member.tbh-icon{
+            background-position: 0 -572.5px;
+        }
+
+        .sub-column{
+            float: right;
+            width: 160px;
+            height: 512px;
+            margin-right: 10px;
+            margin-top: 10px;
+            display: none;
+        }
+
+        .tbh-focus{
+            overflow: hidden;
+            height: 280px;
+            background-color: brown;
+        }
+        .member-tjb{
+            height: 25px;
+            margin-top: 8px;
+        }
+        .member-ft{
+            height: 40px;
+            overflow: hidden;
+            padding: 15px;
+            margin-top: 2px;
+            text-align: center;
+        }
+        .member-logout{
+            height: 25px;
+            margin-top: 8px;
+        }
+        .w{
+            width: 75px;
+        }
+        .btn-login{
+            float: left;
+            line-height: 25px;
+            margin-right: 7px;
+            color: #FFFFFF;
+            background-image: linear-gradient(to right,#ff5000 0,#ff6f06 100%);
+            background-repeat: repeat-x;
+            border-radius: 4px;
+            background-clip: padding-box;
+            font-size: 16px;
+            font-weight: 700;
+            padding: 0;
+        }
+        .tbh-tipoff a{
+            position: relative;
+            padding-left: 82px;
+            color: #f40;
+            display: block;
+            height: 26px;
+            line-height: 26px;
+            background-color: #ffe4dd;
+            font-size: 12px;
+        }
+        .triangle{
+            position: absolute;
+            right: 52px;
+            top: 9px;
+            line-height: 0;
+            width: 0;
+            height: 0;
+            border-style: solid;
+            margin-left: 32px;
+            border-width: 5px 0 5px 7px;
+            border-color: transparent transparent transparent #f40;
+        }
+        .tbh-notice{
+            height: 98px;
+            padding-top: 10px;
+            width: 290px;
+            background-color: gold;
+        }
+        .tbh-conve{
+            width: 290px;
+            height: 232px;
+            background-color: brown;
+        }
+        .tbh-app{
+            width: 290px;
+            height: 110px;
+            background-color: purple;
+            padding-top: 1px;
+            position: relative;
+        }
+    </style>
+</head>
+<body>
+    <div class="top-info">
+        <div class="site-nav-bd">
+            登录提示
+        </div>
+        <div class="vip-advertisement">会员广告</div>
+        <div></div>
+    </div>
+    <div class="center">
+        <div class="log">
+            <a href="https://pages.tmall.com/wow/a/act/tmall/23149/pageFrame?spm=a21bo.2017.201857.2.5af911d9EqKpvh&wh_biz=tm&wh_weex=true&wx_main_hc=true&wh_bizStageId=765" target="_blank">
+                <img src="https://img.alicdn.com/tfs/TB1APaub.Y1gK0jSZFMXXaWcVXa-190-121.gif" alt="加载失败">
+            </a>
+        </div>
+        <div class="serch-box">
+            <div id="J_SearchTab">
+                <div class="search-warp">
+                    <ul class="ks-switchable-nav">
+                        <li class="J_serchTab">宝贝</li>
+                        <li class="J_serchTab">天猫</li>
+                        <li class="J_serchTab">店铺</li>
+                    </ul>
+                </div>
+                <form class="J_TSearchForm" target="_top">
+                    <div class="search-panel-fields">
+                        <input type="text" id="q" />
+                        <div class="search-button">
+                            <button class="btn-search" type="submit">搜索</button>
+                        </div>
+                        <!--<i class="tb-ifont J_SearchIcon"></i>-->
+                        <div class="search-common-panel"></div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="search-ft"></div>
+    </div>
+    <div class="models">
+        <div class="tb-bg" role="navigation">
+            <h2 id="ti">主题市场</h2>
+            <ul class="nva-hd">
+                <li>
+                    <a href="https://www.tmall.com" id="">天猫</a>
+                </li>
+                <li>
+                    <a href="https://ju.taobao.com?spm=a21bo.2017.201859.2.5af911d9P3bsBe">聚划算</a>
+                </li>
+                <li>
+                    <a href="https://chaoshi.tmall.com">天猫超市</a>
+                </li>
+            </ul>
+            <ul class="nva-bd">
+                <li class="pipe">|</li>
+                <li>
+                    <a href="https://qiang.taobao.com?spm=a21bo.2017.201859.4.5af911d9P3bsBe">淘抢购</a>
+                </li>
+                <li>
+                    <a href="https://3c.tmall.com">电器城</a>
+                </li>
+                <li>
+                    <a href="https://sf.taobao.com?spm=a21bo.2017.201859.6.5af911d9P3bsBe">司法拍卖</a>
+                </li>
+                <li>
+                    <a href="https://good.tmall.com?spm=a21bo.2017.201859.7.5af911d9P3bsBe">淘宝心选</a>
+                </li>
+                <li>
+                    <a href="https://www.taobao.com/markets/xt/znfp?spm=a21bo.2017.201859.8.5af911d9P3bsBe">兴农扶贫</a>
+                </li>
+            </ul>
+            <ul class="nva-bd last">
+                 <li class="pipe">|</li>
+                <li>
+                    <a href="https://www.fliggy.com/?spm=a21bo.50862.201859.9.28689e73wh3bzS">飞猪旅行</a>
+                </li>
+                <li>
+                    <a href="https://yun.taobao.com">智能生活</a>
+                </li>
+                <li>
+                    <a href="https://suning.tmall.com/">苏宁易购</a>
+                </li>
+                <li>
+                    <a href="https://aliyun.tmall.com/">云栖大会黑科技</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+        <div class="screen">
+            <div class="main" role="main">
+                <div class="main-inner">
+                    <div class="tbn-models">
+                        分类
+                    </div>
+                    <div class="core J_Core">
+                        宣传海报
+                    </div>
+                    <div class="sub-column">
+                        <div class="tbh-focus J_Module"> 宣传广告
+                        </div>
+                    </div>
+
+                </div>
+                <div class="adv">广告</div>
+            </div>
+            <div class="cup-right">
+                <div class="login-sytem">
+                    <div class="member">
+                        <div class="member-bd">
+                            <div class="avatar-wrapper">
+                                <a  class="member-home" href="" target="_self">
+                                    <img class="member-avatar" src="http://gw.alicdn.com/tps/i3/TB1yeWeIFXXXXX5XFXXuAZJYXXX-210-210.png_50x50.jpg" />
+                                </a>
+                            </div>
+                            <span class="member-nick-info">
+
+                                 Hi!
+                            <strong class="nick-member">
+                                你好
+                            </strong>
+                            </span>
+                            <p class="member-tjb">
+                                <a href="//taojinbi.taobao.com/index.htm?spm=a21bo.2017.201864-1.d3.5af911d9wCfkWN&auto_take=true" class="J_MemberPunch h">
+                                    <span class="tbh-icon"></span>
+                                    淘金币抵钱
+                                </a>
+                                <a href="//vip.taobao.com?spm=a21bo.2017.201864-1.3.5af911d9wCfkWN" class="J_MemberPunch h club">
+                                    <span class="tbh-icon"></span>
+                                    会员俱乐部
+                                </a>
+                            </p>
+                        </div>
+                        <div class="member-ft">
+                            <div class="member-logout">
+                                <a href="//login.taobao.com/member/login.jhtml?spm=a21bo.2017.201864-2.d1.5af911d9EBK6Ve&f=top&redirectURL=http%3A%2F%2Fwww.taobao.com%2F" class="btn-login w">
+                                    登录
+                                </a>
+                                <a href="//reg.taobao.com/member/new_register.jhtml?spm=a21bo.2017.201864-2.d2.5af911d9EBK6Ve&from=index&ex_info=&ex_sign=" class="btn-login w">
+                                    注册
+                                </a>
+                                <a href="//openshop.taobao.com/openshop/welcome.htm?spm=a21bo.2017.201864-2.3.5af911d9EBK6Ve" class="btn-login w">
+                                    开店
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tbh-tipoff">
+                    <a href="http://report.12377.cn:13225/toreportinputNormal_anis.do?spm=a21bo.2017.0.0.5af911d9EBK6Ve&file=toreportinputNormal_anis.do">
+                       网上有害信息举报专区
+                        <span class="triangle"></span>
+                    </a>
+                </div>
+                <div class="tbh-notice">公告</div>
+                <div class="tbh-conve"> 生活出行</div>
+                <div class="tbh-app J_Module">阿里APP</div>
+                <!--<div class="ann">公告</div>-->
+                <!--<div class=""></div>-->
+                <!--次要内容-->
+            </div>
+        </div>
+
+    <div class="button-info">底部信息
+        <div class="hd">同类介绍</div>
+        <div class="bd">知识产权</div>
+        <div class="ft">证书</div>
+    </div>
+
+</body>
+</html>

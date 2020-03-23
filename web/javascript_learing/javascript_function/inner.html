@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>内部函数</title>
+    <script>
+        // 内部函数只能在内部调用,外部无法调用
+        function outher() {
+            function inner() {
+                alert('内部函数');
+            }
+        }
+        outher();
+    </script>
+</head>
+<body>
+
+</body>
+</html>

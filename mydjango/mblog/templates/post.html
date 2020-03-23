@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% load markdown_deux_tags %}
+{% block title %} {{post.title}} {% endblock %}
+{% block apply %}
+        a:hover{
+            color:red;
+            text-decoration: none;
+        }
+        .tit{
+            font-size: 12pt;
+            font-weight: 400;
+            text-decoration: none;
+            color: blue;
+        }
+{% endblock %}
+{% block headmessage %}
+    <h3>{{post.title}}</h3>
+    <a href="/" class="tit">回首页</a>
+{% endblock %}
+{% block content %}
+    <p style="font-size: 12px; letter-spacing: 2pt;">{{post.body | markdown}}</p>
+{% endblock %}
+
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+    <!--<meta charset="UTF-8">-->
+    <!--<title>{{post.title}}</title>-->
+    <!--<style>-->
+        <!--a{-->
+            <!--text-decoration: none;-->
+            <!--color: black;-->
+        <!--}-->
+        <!--a:hover{-->
+            <!--color: red;-->
+        <!--}-->
+    <!--</style>-->
+<!--</head>-->
+<!--<body>-->
+    <!--<h1>{{post.title}}</h1>-->
+    <!--<hr />-->
+    <!--<p style="font-size: 12px; letter-spacing: 1pt">-->
+        <!--{{post.body}}-->
+    <!--</p>-->
+    <!--<hr />-->
+    <!--<h3>-->
+        <!--<a href="/">回首页</a>-->
+    <!--</h3>-->
+<!--</body>-->
+<!--</html>-->

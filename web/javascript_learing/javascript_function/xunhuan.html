@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>循环表格</title>
+    <script>
+        function mytable(row, line) {
+            document.write('<table width="500" border="1">');
+            for(var i=0; i<row; i++){
+                document.write('<tr>');
+                for(var j=0; j<line; j++){
+                    document.write('<td>'+i+j+'</td>');
+                }
+                document.write('</tr>');
+            }
+            document.write('</table>');
+        }
+        mytable(15, 10);
+    </script>
+</head>
+<body>
+
+</body>
+</html>

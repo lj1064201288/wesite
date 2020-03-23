@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block title %}我有话要说:{% endblock %}
+
+{% block content %}
+    <div class="container">
+        {% if message %}
+            <div class="alert alert-warning">{{message}}</div>
+        {% endif %}
+        <form action="." name="my form" method="POST">
+            {% csrf_token %}
+            现在的心情:<br />
+            {% for mood in moods %}
+            <input type="radio" value="{{mood.status}}" name="mood">{{mood.status}}
+            {% endfor %}
+            <br />
+            心情留言板: <br />
+            <textarea name="user_post" id="user_post" cols="70" rows="3"></textarea>
+            <br />
+            <label for="user_id">您的昵称:</label>
+            <input type="text" id="user_id" name="user_id">
+            <label for="user_pass">张贴/删除的密码</label>
+            <input type="password" id="user_pass" name="user_pass">
+            <br />
+            <label for="user_captcha">请输入验证码:</label>
+            <p id="user_captcha">{{captcha.captcha}}</p>
+            <input type="submit" value="张贴">
+            <input type="reset" value="重新填写">
+        </form>
+    </div>
+
+{% endblock %}

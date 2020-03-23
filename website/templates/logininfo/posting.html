@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% block title %}发表日记{% endblock %}
+{% block style %}
+<style>
+    #id_message-wmd-wrapper{
+        margin:15px 0;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+         <div class="row">
+            <div class="col-2 first">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                      <a class="nav-link" href="/diary">查看日记</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="/diary/post2db">发布心情</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="/diary/post">记录日记</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="/diary/list">心情广场</a>
+                    </li>
+                </ul>
+            </div>
+             <div class="col-9">
+                 <div class="panel panel-success title">
+                     <div class="panel-heading" align="center">
+                         <h3>日记</h3>
+                     </div>
+                 </div>
+                {% for message in messages %}
+                <div class="alert alert-{{message.tags}}" align="center">{{message}}</div>
+                {% endfor %}
+
+
+                 <form action="." name="myform" method="POST">
+                     {% csrf_token %}
+                        <table>
+                            <tbody class="table">
+                                <tr>
+                                    <th>
+                                        <label for="id_budget">今日花费(元):</label>
+                                    </th>
+                                    <td>
+                                        <input id="id_budget" name="budget" step="any" type="number" value="0" class="form-control">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        <label for="id_weight">今日体重(kg):</label>
+                                    </th>
+                                    <td>
+                                        <input id="id_weight" name="weight" step="any" type="number" value="0" class="form-control">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        <label for="id_note">描述:</label>
+                                    </th>
+                                    <td>
+                                        {{post_form.media}}
+                                        {{post_form.note}}
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                     <br />
+                     <input type="submit" value="张帖" class="btn btn-success" align="left">
+                     <input type="reset" value="重新填写" class="btn btn-info">
+                 </form>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

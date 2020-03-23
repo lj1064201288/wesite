@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block title %}我有话要说{% endblock %}
+{% block content %}
+<div class="contaer">
+    {% for message in messages %}
+        <div class="alert alert-{{message.tags}}">{{message}}</div>
+    {% endfor %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading" align="center">
+                    <h3>{{username | default:'我'}}的私人日记</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% for diary in diaries %}
+        {% cycle '<div class="row">' "" ""%}
+            <div class="col-md-4">
+                <div class="panel panel-primary">
+                    <div class="panel-heading" align="center">
+                        {{diary.ddate}}
+                    </div>
+                    <div class="panel-body">
+                        {{diary.note}}
+                    </div>
+                    <div class="panel-footer">
+                        今日体重:{{diary.weight}}公斤 今日花费:{{diary.budget}}元
+                    </div>
+                </div>
+            </div>
+        {% cycle "" "" "</div>"%}
+    {% empty %}
+        {% if username == None %}
+            <h3><em>需要登录才能看到您的日记</em></h3>
+        {% else %}
+            <h3><em>您还没有写过日记</em></h3>
+        {% endif %}
+    {% endfor %}
+</div>
+{% endblock %}

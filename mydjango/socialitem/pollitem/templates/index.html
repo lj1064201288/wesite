@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% load mvote_extra %}
+{% block title %}主页{% endblock %}
+{% block content %}
+<div class="container">
+    {% for message in messages %}
+        <div class="alert alert-{{message.tags}}">{{message}}</div>
+    {% endfor %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading" align="center">
+                    <h3>欢迎光临小熊猫社交</h3>
+                    <p>欢迎使用Github注册/登录注册您的账号，可拥有投票与制作投票的权限</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        {% load account %}
+        {% for poll in polls %}
+            {% if forloop.first %}
+                <div class="list-group">
+            {% endif %}
+                    <a href="{% url 'poll-url' poll.id %}" class="list-group-item">
+                        <span class="glyphicon glyphicon-edit"></span>
+                        总票数:{{poll.id | show_votes}},
+                        总选项:{{poll.id | show_items}}:
+                        {{poll.name}} added by 【{{poll.user}}】.
+                        created at {{poll.created_at}}
+
+                    </a>
+
+            {% empty %}
+                <p>尚未有人发布投票</p>
+            {% if forloop.last %}
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+    <div class="row">
+        <button class="btn btn-info">
+            目前是第{{polls.number}}页
+        </button>
+        {% if polls.has_previous %}
+            <button class="btn btn-info">
+                <a href="?page=1">首页</a>
+            </button>
+            <button class="btn btn-info">
+                <a href="?page={{polls.previous_page_number}}">上一页</a>
+            </button>
+        {% endif %}
+        {% if polls.has_next %}
+            <button class="btn btn-info">
+                <a href="?page={{polls.next_page_number}}">下一页</a>
+            </button>
+            <button class="btn bt-info">
+                <a href="?page={{polls.end_index}}">末页</a>
+            </button>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <title>{% block title %}首页{% endblock %} -typeidea 博客系统</title>
+    <script src="{% static 'ckeditor/ckeditor/ckeditor.js' %}"></script>
+    <script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
+    <link rel="stylesheet" href="{% static './css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static './css/common.css'%}">
+    <meta name="viewport" content="width=device-width, inital-scale=1, shrink-to-fit=no">
+    <script src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
+    <script src="{% static './js/bootstrap.min.js' %}"></script>
+    {% block extra_head %}
+    {% endblock %}
+    <style>
+        .post{
+            margin-bottom: 5px;
+        }
+        .carousel-inner img{
+            width: 100%;
+            height: 400px;
+        }
+        .jumbotron{
+            padding: 0px;
+        }
+
+    </style>
+    <script>
+
+    </script>
+</head>
+<body>
+    <div class="container head">
+        {% include "header.html" %}
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="/">首页</a>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    {% for cate in navs %}
+                    <li class="nav-item">
+                        <a href="{% url 'category-list' cate.id %}" class="nav-link">{{cate.name}}</a>
+                    </li>
+                    {% endfor %}
+
+
+                </ul>
+                <!--<a href="/issue" class="nav-link" style="color: #D92E2E">-->
+                    <!--<span class="glyphicon glyphicon-pencil"></span>-->
+                    <!--写博客-->
+                <!--</a>-->
+                <form action="/search/" class="form-inline" method="GET" id="myform">
+                    <input type="search" class="form-control" name="keyword" id="Search"
+                           aria-label="Search" value="{{keyword}}" placeholder="Search" />
+
+                    <input class="btn btn-outline-success" type="submit" value="文章搜索" id="kw" />
+                </form>
+            </div>
+        </nav>
+        <div class="jumbotron">
+            <div class="row">
+                <div class="col-sm-9">
+                    <div id="demo" class="carousel slide" data-ride="carousel">
+                      <!-- 指示符 -->
+                      <ul class="carousel-indicators">
+                          <li data-target="#demo" data-slide-to="0" class="active"></li>
+                          <li data-target="#demo" data-slide-to="1"></li>
+                          <li data-target="#demo" data-slide-to="2"></li>
+                          <li data-target="#demo" data-slide-to="3"></li>
+                      </ul>
+
+                      <!-- 轮播图片 -->
+                      <div class="carousel-inner">
+                        <div class="carousel-item active">
+                          <img src="{% static 'images/blog/carousel1.jpg' %}">
+                        </div>
+                        <div class="carousel-item">
+                          <img src="{% static 'images/blog/carousel2.jpg' %}">
+                        </div>
+                        <div class="carousel-item">
+                          <img src="{% static 'images/blog/carousel3.jpg' %}">
+                        </div><div class="carousel-item">
+                          <img src="{% static 'images/blog/carousel5.jpg' %}">
+                        </div>
+                      </div>
+
+                      <!-- 左右切换按钮 -->
+                      <a class="carousel-control-prev" href="#demo" data-slide="prev">
+                        <span class="carousel-control-prev-icon"></span>
+                      </a>
+                      <a class="carousel-control-next" href="#demo" data-slide="next">
+                        <span class="carousel-control-next-icon"></span>
+                      </a>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                     <div class="right-one-row layui-row pane-bg-radius">
+                         <div class="visit-img-box top-radius">
+                             <img src="{% static 'images/blog/headimgbg.jpg' %}" class="top-radius"/>
+                         </div>
+                         <div class="headimg-box">
+                             <img src="{% static 'images/blog/headimg.jpg' %}"/>
+                         </div>
+                         <div class="nickname layui-row row-align text-align-center">
+                             你中意的名字
+                             <span>
+                                 <img src="{% static 'images/blog/man.png' %}" height="32"width="32"/>
+                             </span>
+                         </div>
+                         <div class="padding-hr layui-row common-padding-x">
+                             <div class="hr-line-div"></div>
+                         </div>
+                         <div class="mine-msg layui-row common-padding font-size1 font-color5">
+                             <div class="layui-row row-align">
+                                 <div class="msg-name layui-col-md3">Q Q ：</div>
+                                 <div class="msg-val layui-col-md9">1064201288</div>
+                             </div>
+                             <div class="layui-row row-align">
+                                 <div class="msg-name layui-col-md3">兴趣 ：</div>
+                                 <div class="msg-val layui-col-md9">游泳、看电视</div>
+                             </div>
+                             <div class="layui-row row-align">
+                                 <div class="msg-name layui-col-md3">现居 ：</div>
+                                 <div class="msg-val layui-col-md9">四川省-成都市</div>
+                             </div>
+                             <div class="layui-row row-align">
+                                 <div class="msg-name layui-col-md3">Email ：</div>
+                                 <div class="msg-val layui-col-md9">1064201288@qq.com</div>
+                             </div>
+                             <div class="layui-row row-align">
+                                 <div class="msg-name layui-col-md3">技能 ：</div>
+                                 <div class="msg-val layui-col-md9">Python, Web, C, Linux</div>
+                             </div>
+                         </div>
+                     </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="container main">
+            <div class="row">
+                <div class="col-9 post-list">
+                {% block main %}
+                {% endblock %}
+                </div>
+                <div class="col-3">
+                {% block sidebar %}
+                    {% for sidebar in sidebars %}
+                        <div class="card sidebar">
+                            <div class="card-body">
+                                <h4 class="card-title">{{sidebar.title}}</h4>
+                                <p>
+
+                                    {% autoescape off %}
+                                    {{sidebar.content_html}}
+                                    {% endautoescape %}
+                                </p>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% endblock %}
+                </div>
+            </div>
+        </div>
+
+        <footer class="footer">
+        {% block footer %}
+            <div class="container">
+                <hr />
+                <nav class="nav category">
+                    {% for cate in categories %}
+                    <a href="{% url 'category-list' cate.id %}" class="nav-link">
+                        {{cate.name}}
+                    </a>
+                    {% endfor %}
+                </nav>
+            </div>
+            <div class="container power">
+                <span class="text-muted">Power by Typeidea@the5fire</span>
+            </div>
+        {% endblock %}
+        </footer>
+        {% include "footer.html" %}
+</body>
+</html>

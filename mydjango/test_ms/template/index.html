@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block title %}事项{% endblock %}
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <label for="nickname">发布者:</label>
+            <input type="text" id="nickname" name="nickname" class="form-control">
+            <label for="user_mood" class="control-label">
+                     选择类型:
+            </label>
+            {% if moods %}
+                {% for mood in moods %}
+                <input type="radio" value="{{mood.status}}" name="user_mood" id="user_mood">{{mood.status}}
+                {% endfor %}
+            {% endif %}
+            <br />
+            <label for="sx" class="control-label">内容:</label>
+            <textarea class="form-control" id="sx" name="post"></textarea>
+            <button class="btn btn-danger">提交</button>
+        </div>
+        <div class="row">
+            {% for matter in matterss %}
+            {% cycle '<div class="row"> <div class="col-md-4">' '<div class="col-md-4">' '<div class="col-md-4">' %}
+                <div class="panel panel-primary">
+                    <div class="panel-heading">【{{matter.nickname}}】</div>
+                    <div class="panel-body" style="overflow: hidden">{{matter.message|linebreaks}}</div>
+                    <div class="panel-footer" align="right">
+                        <div style="width: 50px; height: 20px; background-color: aqua; color: red; font-size: 14px; float: left;" align="center">
+                            <b>{{matter.mood.status}}</b></div>
+                        <i><small>{{matter.pub_time}}</small></i> &nbsp
+                        <span class="glyphicon glyphicon-trash" onclick="go_delete({{matter.id}})"></span>
+                    </div>
+                </div>
+            </div>
+            {% cycle "" "" "</div>" %}
+        {% endfor %}
+        </div>
+    </div>
+
+{% endblock %}
+            <script>
+
+
+            </script>

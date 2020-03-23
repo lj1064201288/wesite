@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>实现计算机的回调函数</title>
+    <script>
+        function add(a, b){
+            return a+b;
+        }
+
+        function miuns(a, b){
+            return a-b;
+        }
+
+        function multiply(a, b){
+            return a*b;
+        }
+
+        function divle(a, b) {
+            return a/b;
+        }
+
+        function computer(a, b, oper) {
+            return oper(a, b);
+        }
+
+        result = computer(2, 5, add);
+        console.log(result);
+
+    </script>
+</head>
+<body>
+
+</body>
+</html>

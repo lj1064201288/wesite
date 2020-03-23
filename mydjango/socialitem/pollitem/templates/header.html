@@ -1,0 +1,26 @@
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <div class="navbar-brand" align="center">
+                小熊猫社交
+            </div>
+        </div>
+        {% load account %}
+        <ul class="nav nav-pills">
+            <li class="active">
+                <a href="/"><b>Home</b></a>
+            </li>
+            {% if user.is_authenticated %}
+                <li><a href="/addpoll/">新增(编辑)投票</a></li>
+                <li><a href="{% url 'account_reset_password' %}">重置密码</a></li>
+                <li><a href="{% url 'account_email' %}">更改绑定邮箱</a></li>
+                <li><a href="{% url 'account_logout' %}">注销</a></li>
+            {% else %}
+                <li><a href="/accounts/login">登录</a></li>
+                <li><a href="{% url 'account_signup' %}">注册</a></li>
+                <li><a href="/addpoll">发布话题</a></li>
+            {% endif %}
+            <li><a href="/admin">后台管理</a></li>
+        </ul>
+    </div>
+</nav>

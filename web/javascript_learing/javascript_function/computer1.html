@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>函数作用域的计算机</title>
+    <script>
+        function add(a, b){
+            return a + b;
+        }
+        function minus(a, b){
+            return a - b;
+        }
+        function multiply(a, b){
+            return a * b;
+        }
+        function divide(a, b){
+            return a / b;
+        }
+
+
+        function computer(a, b, oper) {
+            switch(oper){
+                case '+':
+                    result = add(a, b);
+                    return result;
+                case '-':
+                    result = minus(a, b);
+                    return result;
+                case '*':
+                    result = multiply(a, b);
+                    return result;
+                case '/':
+                    result = divide(a, b);
+                    return result;
+            }
+        }
+
+        num = computer(2, 5, '+');
+        console.log(num);
+
+
+    </script>
+</head>
+<body>
+
+</body>
+</html>

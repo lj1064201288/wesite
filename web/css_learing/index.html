@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>背景颜色</title>
+    <meta charset="UTF-8"/>
+    <style>
+        div {
+            width: 500px;
+            height: 200px;
+            border: 1px solid red;
+            margin: 10px;
+        }
+
+        /*bg1设置成背景颜色*/
+        .bg1{
+            background-color: yellow;
+        }
+        /*给背景2设置成背景图片，不做任何操作的*/
+        .bg2{
+            background-image: url('./mn.jpeg');
+        }
+        /*给bg3设置为背景图片，是图片在框内水平或者垂直填充*/
+        .bg3{
+            background-image: url("./mn.jpeg");
+            /*水平填充操作*/
+            /*background-repeat: repeat-x;*/
+            /*垂直填充操作*/
+            /*background-repeat: repeat-y;*/
+            /*不填充操作*/
+            background-repeat: no-repeat;
+        }
+        /*给bg4设置为背景图片，指定到相对应的位置*/
+        .bg4{
+            background-image: url("./mn.jpeg");
+            background-repeat: no-repeat;
+            /*使用单词指定位置*/
+            /*background-position: center;*/
+            /*使用百分比进行设置位置*/
+            /*background-position: 20% 40%;*/
+            /*使用像素表示指定位置*/
+            background-position: 200px, 40px;
+        }
+
+        /*使用位置x-y设置位置*/
+        .bg5{
+            background-image: url("./mn.jpeg");
+            background-repeat: no-repeat;
+            background-position-x: left;
+            background-position-y: bottom;
+        }
+
+
+
+
+    </style>
+</head>
+<body>
+    <div class="bg1">1</div>
+    <div class="bg2">2</div>
+    <div class="bg3">3</div>
+    <div class="bg4">4</div>
+    <div class="bg5">5</div>
+
+</body>
+</html>

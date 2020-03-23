@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}电视新闻直播{% endblock %}
+{% block tvname %}{{tv.name}}{% endblock %}
+{% block menu %}
+    <ul class="nav navbar-nav">
+        <li class="active"><a href="/">Home</a></li>
+        {% for t in tv_list %}
+            <li>
+                <a href="{% url 'tv-url' forloop.counter %}">{{t.name}}</a>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}
+{% block content %}
+    <div class="continer">
+        <div id="tvcode" align="center">
+            {% if hours > 18 %}
+                晚安
+            {% elif hours < 10 %}
+                早安
+            {% else %}
+                中午好
+            {% endif %}
+            <br />
+            <iframe src="https://v.youku.com/v_show/{{tv.tvcode}}==.html?autoplay=1" frameborder="0" width="560" height="315" allowfullscreen></iframe>
+        </div>
+    </div>
+{% endblock %}

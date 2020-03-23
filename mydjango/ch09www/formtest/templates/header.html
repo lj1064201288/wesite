@@ -1,0 +1,26 @@
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <div class="navbar-brand" align="center">
+                小熊猫心里话
+            </div>
+        </div>
+        <ul class="nav nav-pills">
+            <li class="active">
+                <a href="/"><b>Home</b></a>
+            </li>
+            {% if username %}
+                <li><a href="/userinfo"><b>个人资料</b></a></li>
+                <li><a href="/post"><b>写日记</b></a></li>
+                <li><a href="/contact"><b>联络管理</b></a></li>
+                <li><a href="/logout"><b>注销</b></a></li>
+            {% else %}
+                <li><a href="/login"><b>登录</b></a></li>
+                <li><a href="/login"><b>注册</b></a></li>
+                <li>
+                    <a href="/admin"><b>后台管理</b></a>
+                </li>
+            {% endif %}
+        </ul>
+    </div>
+</nav>

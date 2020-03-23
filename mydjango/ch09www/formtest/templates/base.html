@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %}</title>
+
+    <style>
+        p, h1, h2, h3, h4, h5, div{
+            font-family: 微软雅黑;
+        }
+    </style>
+
+    <link href="https://cdn.bootcss.com/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/twitter-bootstrap/3.3.7/css/bootstrap-theme.min.css" rel="stylesheet">
+    <script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
+    <script src="http://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script>
+        function go_delete(id) {
+            var user_pass = document.getElementById('user_pass').value;
+            if (user_pass != "") {
+                var usr = '/' + id + '/' + user_pass;
+                window.location = usr;
+            }
+        }
+    </script>
+</head>
+<body>
+    {% include 'header.html' %}
+    {% block content %}
+    {% endblock %}
+
+    {% include 'footer.html' %}
+
+</body>
+</html>

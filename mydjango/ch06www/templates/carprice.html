@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>二手市场卖场</title>
+    {% load humanize %}
+</head>
+<body>
+    <h2>现有车辆的价格以及库存</h2>
+    <table>
+        <tr>
+            {% for m in carmaker %}
+                <td bgcolor="aqua">
+                    <a href="{% url 'carprice-url' forloop.counter0 %}">{{m}}</a>
+                </td>
+            {% endfor %}
+        </tr>
+    </table>
+    <table border="1">
+        {% for c in cars|dictsort:'price' %}
+            {% if forloop.first %}
+            <tr>
+                <td>车厂</td>
+                <td>车款</td>
+                <td>价格</td>
+                <td>库存数量</td>
+            </tr>
+            {% endif %}
+            <tr bgcolor="{% cycle 'ffffff' 'cccccc' 'bbbbbb' %}">
+                <td>{{maker_name}}</td>
+                <td>{{c.model}}</td>
+                <td align="right">NT${{c.price | floatformat:2 | intcomma}}</td>
+                <td>{{c.number}}</td>
+            </tr>
+        {% if forloop.last %}
+    </table>
+        {% endif %}
+        {% endfor %}
+    <em>{% now 'D M Y h:m:s a' %}</em>
+
+</body>
+</html>

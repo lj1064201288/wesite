@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% block title %}写日记{% endblock %}
+
+{% block content %}
+<div class="contaer">
+
+    <div class="row">
+        <div class="col-2 first">
+
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                      <a class="nav-link" href="/diary">查看日记</a>
+                    </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/diary/post2db">发布心情</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/diary/post">记录日记</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/diary/list">心情广场</a>
+                </li>
+            </ul>
+        </div>
+        <div class="col-10">
+
+
+             <div class="card bg-info" align="center">
+                <h3>{{nickname | default:'我'}}的私人日记</h3>
+            </div>
+            <hr />
+            {% for diary in diaries %}
+                {% cycle '<div class="row">' "" ""%}
+                    <div class="col-md-12">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading" align="center">
+                                {{diary.ddate}}
+                            </div>
+                            <div class="panel-body">
+                                {% autoescape off %}
+                                {{diary.note}}
+                                {% endautoescape %}
+                            </div>
+                            <div class="panel-footer">
+                                    今日体重:{{diary.weight}}公斤 今日花费:{{diary.budget}}元
+                            </div>
+                        </div>
+                        <hr />
+                    </div>
+                {% cycle "" "" "</div>"%}
+            {% empty %}
+                {% if username == None %}
+                    <h3><em>需要登录才能看到您的日记</em></h3>
+                {% else %}
+                    <h3><em>您还没有写过日记</em></h3>
+                {% endif %}
+            {% endfor %}
+            </div>
+        </div>
+</div>
+{% endblock %}

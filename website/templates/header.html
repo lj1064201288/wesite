@@ -1,0 +1,60 @@
+<nav class="navbar navbar-expand-sm bg-dark">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <div class="navbar-brand" align="center" style="color:white">
+                我的进阶之路
+            </div>
+        </div>
+        <ul class="nav nav-pills">
+            <div class="nav-item">
+                <li>
+                    <a href="/" class="nav-link active"><b>Home</b></a>
+                </li>
+            </div>
+
+            {% if username %}
+            <div class="nav-item">
+                <li class="active">
+                    <a href="/userinfo" class="nav-link"><b>个人资料</b></a>
+                </li>
+            </div>
+            <div class="nav-item">
+                <li>
+                    <a href="/diary" class="nav-link"><b>写日记</b></a>
+                </li>
+            </div>
+            <div class="nav-item">
+                <li>
+                    <a href="/logout" class="nav-link"><b>注销</b></a>
+                </li>
+            </div>
+            {% else %}
+            <div class="nav-item">
+                <li>
+                    <a href="/login" class="nav-link"><b>登录</b></a>
+                </li>
+            </div>
+            <div class="nav-item">
+                <li class="active">
+                    <a href="/accounts/register" class="nav-link"><b>注册</b></a>
+                </li>
+            </div>
+            {% endif %}
+            <div class="nav-item">
+                <li class="active">
+                    <a href="/myshop" class="nav-link"><b>商城</b></a>
+                </li>
+            </div>
+            <div class="nav-item">
+                <li class="active">
+                    <a href="/mvote" class="nav-link"><b>投票</b></a>
+                </li>
+            </div>
+            <div class="nav-item">
+                <li>
+                    <a href="/" class="nav-link"><b>后台管理</b></a>
+                </li>
+            </div>
+        </ul>
+    </div>
+</nav>

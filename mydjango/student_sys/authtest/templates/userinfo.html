@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block title %}用户信息{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading" align="center">
+                    <h3>用户信息</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    {{useinfo.user.username | upper}}
+                </div>
+            </div>
+            <div class="panel-body">
+                电子邮箱:{{useinfo.user.email}} <br />
+                性别: {{useinfo.sex}} <br />
+                身高: {{useinfo.height}} <br />
+                体重: {{useinfo.weigh}} <br />
+            </div>
+            <div class="panel-footer">
+                {{useinfo.user.date_joined}}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>循环控制</title>
+    <script>
+        var homedoor = false;
+        var xqdoor = true;
+        var companydoor = false;
+        var homekey = true;
+        var xqkey = false;
+        var companykey = false;
+
+        if (homedoor == false) {
+            if (homekey == true) {
+                console.log('有钥匙可以打开家门');
+                if (xqdoor == false) {
+                    if (xqkey == true) {
+                        console.log('有小区门钥匙可以出入');
+                        if (companydoor == false) {
+                            if (companykey == true) {
+                                console.log('有公司门钥匙，可以出入');
+                            }
+                            else {
+                                console.log('没有公司们钥匙，无法出入');
+                            }
+                        }
+                    }
+                    else {
+                        console.log('没有小区门钥匙，无法出入');
+                    }
+                }
+                else {
+                    console.log('小区门打开的，可以直接出入')
+                    if (companydoor == false) {
+                        if (companykey == true) {
+                            console.log('有公司门钥匙，可以出入');
+                        }
+                        else {
+                            console.log('没有公司们钥匙，无法出入');
+                        }
+                    }
+                }
+            }
+
+            else {
+                console.log("没有钥匙，无法打开家门")
+            }
+        }
+
+        else{
+            console.log('家门已经打开，不需要钥匙!');
+            if (xqdoor == true){
+                console.log("小区门已经打开。可以正常出入");
+                if (companydoor == true){
+                    console.log('公司门已经打开，可以正常出入');
+                }
+                else{
+                    if (companykey == true){
+                        console.log('公司门未开，但是有钥匙，可以出入');
+                    }
+                    else{
+                        console.log('公司门未开，也没有钥匙，无法出入')
+                    }
+                }
+            }
+            else{
+                if (xqkey == true){
+                    console.log('小区大门未开，但是有钥匙可以出入');
+                    if (companydoor == true){
+                    console.log('公司门已经打开，可以正常出入');
+                    }
+                    else{
+                         if (companykey == true){
+                            console.log('公司门未开，但是有钥匙，可以出入');
+                         }
+                        else{
+                            console.log('公司门未开，也没有钥匙，无法出入');
+                         }
+                    }
+                }
+                else{
+                    console.log('小区门未开，没有钥匙，无法出入')
+                }
+            }
+        }
+
+    document.write('aafafasf')
+    </script>
+</head>
+<body>
+
+</body>
+</html>

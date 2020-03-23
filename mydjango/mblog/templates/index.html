@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% block title %} My blog{% endblock %}
+{% block apply %}
+        a:hover{
+            color:red;
+            text-decoration: none
+        }
+        .tit{
+            font-size: 16pt;
+            font-weight: 400;
+        }
+{% endblock %}
+{% block headmessage %}
+    <h3 style="font-family: inherit">本站文章列表</h3>
+{% endblock %}
+{% block content %}
+    {% for post in posts %}
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <p>
+                    <a href="/post/{{post.slug}}" class="tit">{{post.title}}</a>
+                </p>
+            </div>
+            <div class="panel-body" style="background-color: #FFFFDD">
+                <p>{{ post.abstract }}</p>
+            </div>
+            <div class="panel-footer" style="background-color: #efefef">
+                <p>{{ post.pub_date | date:"Y M D, h:m:s" }}</p>
+            </div>
+        </div>
+
+    {% endfor %}
+{% endblock %}
+
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+    <!--<meta charset="UTF-8">-->
+    <!--<title>My Blog</title>-->
+    <!--<style>-->
+        <!--.tit{-->
+            <!--font-weight: bold;-->
+            <!--font-size: 16pt;-->
+            <!--font-family: inherit;-->
+
+        <!--}-->
+        <!--.content{-->
+            <!--font-size: 10pt;-->
+            <!--letter-spacing: 1pt;-->
+        <!--}-->
+        <!--a{-->
+            <!--cursor: pointer;-->
+            <!--text-decoration: none;-->
+            <!--color: black;-->
+            <!--/*color: yellow;*/-->
+        <!--}-->
+        <!--a:hover{-->
+            <!--color: red;-->
+        <!--}-->
+    <!--</style>-->
+<!--</head>-->
+<!--<body>-->
+    <!--<h1>欢迎来到我的博客</h1>-->
+    <!--<hr />-->
+    <!--{% for post in posts %}-->
+        <!--<p class="tit">-->
+            <!--<a href="/post/{{post.slug}}" target="_blank">{{post.title}}</a>-->
+        <!--</p>-->
+        <!--<p class="content">{{post.body}}</p>-->
+    <!--{% endfor %}-->
+    <!--<hr />-->
+    <!--<h3>{{now}}</h3>-->
+<!--</body>-->
+<!--</html>-->
+
+

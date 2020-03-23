@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}电视新闻直播{% endblock %}
+{% block tvname %}{{tv.name}}{% endblock %}
+{% block menu %}
+    <ul class="nav navbar-nav">
+        <li class="active"><a href="/">Home</a></li>
+        <li><a href="{% url 'engtv-url' 0 %}">足球</a></li>
+        <li><a href="{% url 'engtv-url' 1 %}">最美的安排</a></li>
+    </ul>
+{% endblock %}
+{% block content %}
+    <div class="continer">
+        <div id="tvcode" align="center">
+            <iframe src="https://v.youku.com/v_show/{{tv.tvcode}}==.html?autoplay=1" frameborder="0" width="560" height="315" allowfullscreen></iframe>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>计算机内部函数</title>
+    <script>
+        function jsj(x, y, fh) {
+            function jia(x, y) {
+                return x + y;
+            }
+
+            function jian(x, y) {
+                return x - y
+            }
+
+            function cheng(x, y) {
+                return x * y
+            }
+
+            function chu(x, y) {
+                return x / y
+            }
+
+            switch (fh){
+                case 'jia':
+                    return jia(x, y);
+                case 'jian':
+                    return jian(x, y);
+                case 'cheng':
+                    return cheng(x, y);
+                case 'chu':
+                    return chu(x, y);
+            }
+
+        }
+
+        console.log(jsj(3, 5, 'cheng'));
+    </script>
+</head>
+<body>
+
+</body>
+</html>

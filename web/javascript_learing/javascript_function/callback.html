@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>回调函数</title>
+    <script>
+        function myfun(){
+            alert('世界上最悲催的男人就是想出苦逼这个词的男人!');
+        }
+
+        function callbackfun(arg) {
+            console.log(arg, typeof(arg));
+            arg();
+        }
+
+        callbackfun(myfun);
+
+    </script>
+</head>
+<body>
+
+</body>
+</html>
