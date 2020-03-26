@@ -124,6 +124,8 @@ INSTALLED_APPS = (
     'easy_thumbnails',
     'filer',
     'mptt',
+    # 投票app
+    'mainsite',
     # 'allauth',
     # 网站地图
     'django.contrib.sitemaps',
@@ -145,9 +147,13 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
-    # 增加访问统计的时候使用
-    # 'blog.middleware.user_id.UserIDMiddlewares',
+
 )
+
+MIDDLEWARE = [
+    # 增加访问统计的时候使用
+    'blog.middleware.user_id.UserIDMiddlewares',
+]
 
 ROOT_URLCONF = 'website.urls'
 
@@ -218,6 +224,7 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, './static'),
 )
 
+# 邮箱设置
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.163.com'
 EMAIL_PORT = 25
@@ -249,15 +256,7 @@ ACCOUNT_ACTIVATION_DAYS = 7
 REGISTRATION_OPEN = True
 
 CKEDITOR_UPLOAD_PATH = "article_images"
-# CKEDITOR_CONFIGS = {
-#     'default':{
-#         'toolbar': 'Basic',
-#         'height': 300,
-#         'width': 800,
-#         'tabSpaces': 4,
-#         'extraPlugins': 'codesnippet', # 配置代码插件
-#     },
-# }
+
 
 CKEDITOR_CONFIGS = {
     'default': {
@@ -321,3 +320,5 @@ MDEDITOR_CONFIGS = {
 
     }
 }
+
+# APPEND_SLASH = False

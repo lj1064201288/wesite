@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% load mvote_extra %}
+{% block title %}投趣网{% endblock %}
+{% block content %}
+<div class="container">
+    {% for message in messages %}
+        <div class="alert alert-{{message.tags}}">{{message}}</div>
+    {% endfor %}
+    <div class="row">
+        <div class="col-2 first">
+            {% load account %}
+             <ul class="nav flex-column">
+                 <li class="nva-item">
+                     <a href="/mvote" class="nav-link">首页</a>
+                 </li>
+                 <li class="nav-item">
+                     <a href="/mvote/addpoll/" class="nav-link">新增/编辑投票</a>
+                 </li>
+             </ul>
+        </div>
+        <div class="col-10">
+            <div class="row">
+                <div class="col-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading" align="center">
+                            <h3>欢迎光临投票网</h3>
+                            {% if user.is_authenticated%}
+                            {% if user.socialaccount_set.all.0.extra_data.name %}
+                                {{user.socialaccount_set.all.0.extra_data.name}} <br />
+                                <img src="{{user.socialaccount_set.all.0.get_avatar_url}}" width="100">
+                            {% else %}
+                                Welcome: {{user.username}}
+                            {% endif %}
+                            {% else %}
+                                <p>注册登录后可以创建话题以及投票</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <button class="btn btn-info">目前是{{polls.number}}页</button>
+                {% if polls.has_previous %}
+                <button class="btn btn-info">
+                    <a href="?p{{polls.provious_page_number}}">上一页</a>
+                </button>
+                {% endif %}
+                {% if polls.has_next %}
+                <button class="btn btn-info">
+                    <a href="?p{{polls.next_page_number}}">下一页</a>
+                </button>
+                {% endif %}
+            </div>
+            <div class="row">
+                {% for poll in polls %}
+                    {% if forloop.first %}
+                        <div class="list-group">
+                    {% endif %}
+                            <a href="{% url 'poll-url' poll.id %}" class="list-group-item list-group-item-action">
+                                <span class="glyphicon glyphicon-check"></span>
+                                总票数: {{ poll.id | show_votes }}
+                                项数: {{ poll.id | show_items }}
+                                话题: {{poll.name}}
+                                话题人:【{{poll.user.nickname}}】,
+                                创建时间: {{poll.created_date | date:"Y-m-d"}}
+                            </a>
+                    {% if forloop.last %}
+                        </div>
+                    {% endif %}
+                {% empty %}
+                    <center><h3>目前没有活跃的投票项</h3></center>
+                {% endfor %}
+                <div class="list-group">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

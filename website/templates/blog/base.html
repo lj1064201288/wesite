@@ -3,10 +3,11 @@
 <head>
     {% load static %}
     <meta charset="UTF-8">
-    <title>{% block title %}首页{% endblock %} -typeidea 博客系统</title>
+    <title>{% block title %}首页{% endblock %}</title>
+    <link rel="icon" href="{% static 'images/true.jpg' %}">
     <script src="{% static 'ckeditor/ckeditor/ckeditor.js' %}"></script>
     <script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
-    <link rel="stylesheet" href="{% static './css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static './bootstrap-4.4.1-dist/css/bootstrap.css' %}">
     <link rel="stylesheet" href="{% static './css/common.css'%}">
     <meta name="viewport" content="width=device-width, inital-scale=1, shrink-to-fit=no">
     <script src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
@@ -19,12 +20,34 @@
         }
         .carousel-inner img{
             width: 100%;
-            height: 400px;
+            height: 380px;
         }
         .jumbotron{
             padding: 0px;
         }
+        #button_filed{
+            width: 60px;
+            height: 80px;
+            position: fixed;
+            top: 85%;
+            right: 30px;
+            color: brown;
+            background: whitesmoke;
+            font-size: 15px;
+            border: 3px red inset;
+        }
+        #suggest{
+            margin:0 0 2px 0;
+            border: 1px black solid;
+            font-weight: 700;
+        }
+        #top-back{
+            font-size: 20px;
+        }
 
+        .jumbotron{
+            height: 385px;
+        }
     </style>
     <script>
 
@@ -36,13 +59,33 @@
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <a class="navbar-brand" href="/">首页</a>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
                 <ul class="navbar-nav mr-auto">
                     {% for cate in navs %}
+
                     <li class="nav-item">
-                        <a href="{% url 'category-list' cate.id %}" class="nav-link">{{cate.name}}</a>
+                        <div class="dropdown">
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                {{cate.name}}
+                            </button>
+                            <div class="dropdown-menu">
+                                {% if forloop.first %}
+                                {% for py in python_tag %}
+                                    <a class="dropdown-item" href="{% url 'tag-list' py.id %}">{{py.name}}</a>
+                                {% endfor %}
+                                {% endif %}
+                                {% if forloop.last %}
+                                {% for web in web_tag %}
+                                    <a class="dropdown-item" href="{% url 'tag-list' web.id %}">{{web.name}}</a>
+                                {% endfor %}
+                                {% endif %}
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="{% url 'category-list' cate.id %}">&nbsp;{{cate.name}}</a>
+                            </div>
+                          </div>
+                        <!--<a href="{% url 'category-list' cate.id %}" class="nav-link">{{cate.name}}</a>-->
                     </li>
                     {% endfor %}
-
 
                 </ul>
                 <!--<a href="/issue" class="nav-link" style="color: #D92E2E">-->
@@ -102,7 +145,7 @@
                              <img src="{% static 'images/blog/headimg.jpg' %}"/>
                          </div>
                          <div class="nickname layui-row row-align text-align-center">
-                             你中意的名字
+                             刘阿斗
                              <span>
                                  <img src="{% static 'images/blog/man.png' %}" height="32"width="32"/>
                              </span>
@@ -165,21 +208,25 @@
 
         <footer class="footer">
         {% block footer %}
-            <div class="container">
-                <hr />
-                <nav class="nav category">
-                    {% for cate in categories %}
-                    <a href="{% url 'category-list' cate.id %}" class="nav-link">
-                        {{cate.name}}
-                    </a>
-                    {% endfor %}
-                </nav>
-            </div>
             <div class="container power">
-                <span class="text-muted">Power by Typeidea@the5fire</span>
+                <span class="text-muted">Power by lj1064201288@163.com</span>
             </div>
         {% endblock %}
         </footer>
+        <div id="button_filed">
+            <a href="/diary/contact">
+                <div id="suggest" align="center">
+                    投诉/建议
+                    <span class="glyphicon glyphicon-send">
+                </span>
+            </div>
+            </a>
+            <a href="#">
+                <div align="center" id="top-back">
+                    <span class="glyphicon glyphicon-eject"></span>
+                </div>
+            </a>
+        </div>
         {% include "footer.html" %}
 </body>
 </html>

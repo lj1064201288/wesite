@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% load mvote_extra %}
-{% block title %}主页{% endblock %}
+{% block title %}{{category.name | default:'全部商品'}}{% endblock %}
 {% block content %}
 <div class="container">
     {{today}}
@@ -12,25 +12,32 @@
             {% load account %}
 
              <ul class="nav flex-column">
-                <li class="nav-item dropdown">
-                    <a href="/myshop" class="nav-link dropdown-toggle" data-toggle="dropdown">
-                        产品<span class="caret"></span>
-                    </a>
-                    <ul class="dropdown-menu">
-                        {% for cate in all_categries %}
-                        <li><a href="/{{cate.id}}" class="dropdown-item">{{cate.name}}</a></li>
-                        {% endfor %}
-                    </ul>
-                </li>
-                <li class="nav-item">
-                    <a href="/myshop/cart/" class="nav-link">查看购物车</a>
-                </li>
+                 <li class="nva-item">
+                     <a href="/myshop" class="nav-link">首页</a>
+                 </li>
+                 <li class="nav-item dropdown">
+                     <a href="/myshop" class="nav-link dropdown-toggle" data-toggle="dropdown">
+                         分类<span class="caret"></span>
+                     </a>
+                     <span class="caret"></span>
+                     <ul class="dropdown-menu">
+                         {% for cate in all_categries %}
+                         <li><a href="/myshop/{{cate.id}}" class="dropdown-item">{{cate.name}}</a></li>
+                         {% endfor %}
+                     </ul>
+                 </li>
+                 <li class="nav-item">
+                     <a href="/myshop/cart/" class="nav-link">查看购物车</a>
+                 </li>
+                 <li class="nav-item">
+                     <a href="/myshop/myorders/" class="nav-link">我的订单</a>
+                 </li>
              </ul>
         </div>
         <div class="col-10">
             <div class="panel panel-default">
                 <div class="panel-heading" align="center">
-                    <h3>欢迎光临小熊猫商城 <br /> 【{{category.name | default:'全部商品'}}】</h3>
+                    <h3>欢迎光临商城 <br /> 【{{category.name | default:'全部商品'}}】</h3>
                         {% if user.is_authenticated%}
                             {% if user.socialaccount_set.all.0.extra_data.name %}
                                 {{user.socialaccount_set.all.0.extra_data.name}} <br />
@@ -39,11 +46,12 @@
                                 Welcome: {{user.username}}
                             {% endif %}
                         {% else %}
-                            <p>欢迎使用Github注册/登录注册您的账号，可拥该买本站的商品</p>
+                            <p>欢迎观看该商城,此网页只作为展示，没有实物，请勿购买支付!!!</p>
                         {% endif %}
                 </div>
             </div>
-             <button class="btn btn-info">
+
+            <button class="btn btn-info">
                 目前是第{{products.number}}页
             </button>
             {% if products.has_previous %}
@@ -54,6 +62,7 @@
                     <a href="?page={{products.previous_page_number}}">上一页</a>
                 </button>
             {% endif %}
+            <hr />
             {% if products.has_next %}
                 <button class="btn btn-info">
                     <a href="?page={{products.next_page_number}}">下一页</a>
@@ -65,19 +74,19 @@
             {% load account %}
             {% for product in products %}
                {% cycle '<div class="row">' '' '' '' %}
-                    <div class="col-3 col-3 col-3">
+                    <div class="col-4 offset-1 col-4 col-4">
                         <div class="thumbnail">
                             <a href="{% url 'product-url' product.id %}">
-                                <img src="{{product.image.url}}" width="150">
+                                <img src="{{product.image.url}}" width="150" height="150">
                             </a>
                             <div class="caption">
-                                <h4><a href ="{% url 'product-url' product.id %}">{{product.name}}</a> </h4>
+                                <h5><a href ="{% url 'product-url' product.id %}">{{product.name |truncatechars:10 }}</a> </h5>
                                 <p>NT$:{{product.price}}</p>
                                 <p>库存:{{product.stock}}</p>
                                 <p>{{product.description | truncatechars:40}}</p>
                                 {% if user.is_authenticated %}
                                     <button class="btn btn-info" {{product.stock | yesno:',disabled'}}>
-                                        <a href="{% url 'additem-url' product.id 1 %}">放入购物车</a>
+                                        <a href="{% url 'additem-url' product.id 1 %}" style="color: white">放入购物车</a>
                                     </button>
                                 {% endif %}
                             </div>
@@ -91,13 +100,13 @@
                         </div>
                     <!--</div>-->
                 {% endfor %}
-            {% if cart.count > 0 %}
-                <em>当前购物车有{{cart.count}}款产品</em>
+
+        </div>
+        {% if cart.count > 0 %}
+                <b>当前购物车有{{cart.count}}款产品</b>
             {% else %}
                 <p>购物车是空的</p>
             {% endif %}
-        </div>
-
     </div>
 </div>
 {% endblock %}

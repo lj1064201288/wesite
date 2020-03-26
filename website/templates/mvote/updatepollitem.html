@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+{% block title %}{{poll.name}}{% endblock %}
+
+{% block style %}
+<script>
+    $(document).ready(function () {
+        {% for pollitem in pollitems %}
+        var pollitemid = $("#del-go-{{pollitem.id}}").data('itemid');
+        $("#del-go-{{pollitem.id}}").click(function () {
+            $.ajax({
+                type: 'GET',
+                url: '/mvote/delpollitem/'+ pollitemid,
+                data:null,
+                success:function (msg) {
+                    console.log(msg);
+                    if (msg==1){
+                        alert('删除选项成功!!');
+                        location.reload()
+                    }
+                    else{
+                        alert('删除失败!!')
+                    }
+                }
+            })
+        });
+        {% endfor %}
+    })
+
+</script>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-2 first">
+            {% load account %}
+             <ul class="nav flex-column">
+                 <li class="nva-item">
+                     <a href="/mvote" class="nav-link">首页</a>
+                 </li>
+                 <li class="nav-item">
+                     <a href="/mvote/addpoll/" class="nav-link">新增/编辑投票</a>
+                 </li>
+             </ul>
+        </div>
+        <div class="col-10">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading" align="center">
+                            <h3>添加【{{poll.name}}】的选项</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <form action="{{path}}" method="post" name="myform">
+                        {%csrf_token%}
+                        <table>
+                            {{forms.as_p}}
+                        </table>
+                        <input type="submit" value="提交" class="btn btn-success">
+                    </form>
+                </div>
+            </div>
+            <hr />
+            {% for message in messages %}
+            <div class="alert alert-{{message.tags}}">{{message}}</div>
+            {% endfor %}
+            <div class="row">
+                {% for pollitem in pollitems %}
+                    {% if forloop.first %}
+                        <ul class="list-group">
+                    {% endif %}
+                            <li class="list-group-item list-group-item-info">选项{{forloop.counter}}: {{pollitem.name}}
+                                <div style="float: right">
+                                    <span class="glyphicon glyphicon-trash" style="font-size: 12px;color: red"
+                                          id="del-go-{{pollitem.id}}" data-itemid="{{pollitem.id}}"></span>
+                                </div>
+                            </li>
+
+                    {% empty %}
+                        <p>你还尚未添加选项</p>
+                    {% if forloop.last %}
+                        </ul>
+                    {% endif %}
+            </div>
+            <hr />
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

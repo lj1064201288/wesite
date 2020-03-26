@@ -10,6 +10,7 @@
 {% endblock %}
 
 {% block main %}
+
     {% for post in post_list %}
     <div class="card post">
         <div class="card-body">
@@ -20,11 +21,16 @@
             <span class="card-link">分类: <a href="{% url 'category-list' post.category.id %}">
                 {{post.category.name}}
             </a></span>
-            <span class="card-text">{{post.desc}} <a href="{% url 'post-detail' post.id %}">
+            &nbsp;&nbsp;
+            <span class="card-text">{{post.desc | truncatechars:20}} <a href="{% url 'post-detail' post.id %}">
                 完整内容
-            </a></span>
+            </a></span> <br />
+            <span class="glyphicon glyphicon-time" style="font-size: 12px; color: dimgrey"></span>
+            {{post.created_time | date:'Y-m-d h:m:s'}} &nbsp;&nbsp;&nbsp;
+            <span class="glyphicon glyphicon-eye-open" style="font-size: 12px; color: dimgrey"></span> {{post.pv}}
         </div>
     </div>
+    <hr />
     {% endfor %}
 
     {% if page_obj %}

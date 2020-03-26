@@ -65,6 +65,7 @@ class Tag(models.Model):
     status = models.PositiveIntegerField(default=STATUS_NORMAL,
                                          choices=STATUS_ITEMS, verbose_name="状态")
     owner = models.ForeignKey(User, verbose_name="作者")
+    category = models.ForeignKey(Category, verbose_name='分类', on_delete=models.CASCADE)
     created_time = models.DateTimeField(auto_now_add=True,
                                         verbose_name="创建时间")
 
@@ -73,6 +74,18 @@ class Tag(models.Model):
 
     def __str__(self):
         return self.name
+
+    @classmethod
+    def get_python(cls):
+        python_q = Category.objects.get(name='Python')
+        quetyset = cls.objects.filter(category=python_q)
+        return quetyset
+
+    @classmethod
+    def get_web(cls):
+        web_q = Category.objects.get(name='Web')
+        quetyset = cls.objects.filter(category=web_q)
+        return quetyset
 
 class Post(models.Model):
     STATUS_NORMAL = 1

@@ -11,5 +11,5 @@ class OrderForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(OrderForm, self).__init__(*args, **kwargs)
         self.fields['full_name'].label = '收件人姓名'
-        self.fields['address'].label = '邮件地址'
+        self.fields['address'].label = '地址'
         self.fields['phone'].label = '联系号码'

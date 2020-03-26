@@ -23,7 +23,10 @@ from logininfo import views as lv
 
 from pollitem import urls as pu
 
+from mainsite import urls as mu
+
 urlpatterns = [
+    # 博客
     url(r"^$", IndexView.as_view(), name="index"),
     url(r"^category/(?P<category_id>\d+)/$", CategoryView.as_view(), name="category-list"),
     url(r"^tag/(?P<tag_id>\d+)/$", TagView.as_view(), name="tag-list"),
@@ -33,17 +36,22 @@ urlpatterns = [
     url(r"^search/$", SearchView.as_view(), name="search"),
     url(r"^author/(?P<owner_id>\d+)/$", AuthorView.as_view(), name="author"),
 
-
+    # 网站地图
     url(r'^rss|feed/', LatestPostFeed(), name='rss'),
     url(r'^sitemap\.xml$', sitemap_views.sitemap, {'sitemaps':{'posts': PostSitemap}}),
 
+    # 日记路由
     url(r"^diary/", include(lu)),
     url(r'^login/$', lv.login),
     url(r'^logout/$', lv.logout),
     url(r'^userinfo/$', lv.userinfo),
+    url(r'^ver/$', lv.userver, name='ver'),
 
-
+    # 商城路由
     url(r"^myshop/", include(pu)),
+
+    # 投票路由
+    url(r'mvote/', include(mu)),
 
     url(r'^accounts/register/$',
         RegistrationView.as_view(
@@ -62,6 +70,7 @@ urlpatterns = [
     url(r'^ckeditor/', include('ckeditor_uploader.urls')),
     url(r'^filer/$', include('filer.urls')),
     url(r'^captcha/', include('captcha.urls')),
+    # url(r'^accounts/', include('allauth.urls')),
     url(r'^accounts/', include('registration.backends.hmac.urls')),
     url(r'^admin/', custom_site.urls, name='admin'),
 

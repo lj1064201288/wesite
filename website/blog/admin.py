@@ -48,13 +48,14 @@ class CategoryAdmin(BaseOwnerAdmin):
 @admin.register(Tag, site=custom_site)
 class TagAdmin(BaseOwnerAdmin):
     list_display = ['name', 'status', 'created_time']
-    fields = ('name', 'status')
+    fields = ('category', 'name', 'status')
 
     # 设定为当前的登录用户
     # def save_model(self, request, obj, form, change):
     #     obj.owner = request.user
     #
     #     return super(TagAdmin, self).save_model(request, obj, form, change)
+
 
 # 分类模块后台管理过滤器
 class CategoryOwnerFilter(admin.SimpleListFilter):

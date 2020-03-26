@@ -2,12 +2,13 @@ from django.shortcuts import render, redirect
 from django.template.loader import get_template
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import RequestContext
-from django.core.mail import EmailMessage
+from django.core.mail import EmailMessage, send_mail, send_mass_mail, EmailMultiAlternatives
 from django.contrib import messages
 from django.contrib.auth import authenticate
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+
 
 import datetime
 import hashlib
@@ -85,11 +86,10 @@ def contact(request):
     if request.user.is_authenticated():
         username = request.user.username
         useremail = request.user.email
-    messages.get_messages(request)
     if request.method == 'POST':
         form = ContactForm(request.POST)
         if form.is_valid():
-            message = '感谢您的来信.'
+
             user_name = form.cleaned_data['user_name']
             user_city = form.cleaned_data['user_city']
             user_school = form.cleaned_data['user_school']
@@ -100,12 +100,16 @@ def contact(request):
                 居住城市:{}
                 是否在校:{}
                 反应如下：{}
-            '''.format(user_name, user_city, user_school, user_message)
+                网友邮箱:{}
+            '''.format(user_name, user_city, user_school, user_message, user_email)
 
-            email = EmailMessage('来自【进阶之路】的网友邮件', email_body, user_email, ['1064201288@qq.com'])
-
+            email = send_mail('来自【进阶之路】的网友邮件', email_body, 'lj1064201288@163.com', ['1064201288@qq.com'])
+            if email == 1:
+                message = '感谢您的来信，站长收到后会第一时间回复您!'
+            else:
+                message = '邮箱发生失败，请联系站长qq:1064201288'
         else:
-            message = '请正确填写内容'
+            message = '验证码错误/或者其他错误'
     else:
         form = ContactForm()
 
@@ -125,7 +129,6 @@ def post2db(request):
     messages.get_messages(request)
     if request.method == 'POST':
         post_form = PostForm(request.POST)
-        print(post_form['mood'])
         if post_form.is_valid():
             message = '发布成功，不过需要等待管理员查看后才能正常发布!'
             post_form.save()
@@ -146,8 +149,18 @@ def post2db(request):
 
     return HttpResponse(html)
 
+
 def login(request):
+    tar_url = '/'
+    if request.user.is_authenticated():
+        username = request.user.username
+        useremail = request.user.email
+        return redirect('/userinfo')
+    if request.method == 'GET':
+        request.session['login_form'] = request.GET.get('next', '/')
+
     if request.method == 'POST':
+        tar_url = request.session['login_form']
         login_form = LoginFrom(request.POST)
         if login_form.is_valid():
             login_name = request.POST['username'].strip()
@@ -171,7 +184,7 @@ def login(request):
                         nickname = None
                     messages.add_message(request, messages.SUCCESS, '{}！{}.'.format(send, nickname))
 
-                    return redirect('/')
+                    return redirect(tar_url)
                 else:
                     messages.add_message(request, messages.WARNING, '账号尚未启用')
             else:
@@ -223,3 +236,12 @@ def userinfo(request):
 
     return HttpResponse(html)
 
+def userver(request):
+    if request.method == 'GET' and request.is_ajax():
+        user = request.GET.get('username')
+    try:
+        ver = CustomUser.objects.get(username=user)
+
+        return HttpResponse(True)
+    except Exception as e:
+        return HttpResponse(False)

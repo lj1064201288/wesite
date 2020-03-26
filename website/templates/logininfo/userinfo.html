@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% block title %}分享日记{% endblock %}
+{% block title %}个人信息{% endblock %}
 {% block content %}
 <div class="container">
     {% for message in messages %}
@@ -8,8 +8,8 @@
     <div class="row">
         <div class="col-md-12">
             <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3>用户信息</h3>
+                <div class="panel-heading" align="center">
+                    <h3>个人信息</h3>
                 </div>
             </div>
         </div>
@@ -17,11 +17,11 @@
     <div class="row">
         <div class="col-md-12">
             <div class="panel panel-primary">
-                <div class="panel-heading">
-                    {{username | upper}}
+                <div class="panel-heading" align="center">
+                    {{profile.nickname}}
                 </div>
-                <div class="panel-body">
-                    昵称: {{profile.nickname}}<br />
+                <div class="panel-body" align="center">
+                    昵称: {{profile.nickname}} <br />
                     电子邮件:{{profile.email}}<br />
                     身高:{{profile.height}}cm<br />
                     性别:{{profile.get_sex_display}}<br />
@@ -32,10 +32,10 @@
     </div>
     <form action="." name="myform" method="POST">
         {% csrf_token %}
-        <table>
+        <table class="table">
             {{profile_form.as_table}}
         </table>
-        <input type="submit" value="修改个人资料">
+        <input type="submit" value="修改个人资料" class="btn btn-primary">
     </form>
 </div>
 {% endblock %}

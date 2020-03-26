@@ -1,27 +1,80 @@
 {% extends 'base.html' %}
 {% block title %}联络管理员{% endblock %}
+{% block style %}
+<style>
+    form b{
+        float: left;
+    }
+    #id_user_message-wmd-wrapper{
+        margin:15px 0;
+    }
+</style>
+<script>
+    $(function () {
+        $('.captcha').click(function () {
+            $.getJSON('/captcha/refresh/',function (result) {
+                $('.captcha').attr('src',result['image_url']);
+                $('#id_captcha_0').val(result['key']);
+            });
+        });
+    });
+</script>
+{% endblock %}
 {% block content %}
     <div class="contaner">
-        {% if message %}
-            <div class="alert alert-warning">{{message}}</div>
-            {{user_name}} <br />
-            {{user_city}} <br />
-            {{user_email}} <br />
-            {{user_school}} <br />
-            {{user_message|linebreaks}} <br />
-        {% endif %}
-        <div class="panel panel-primary">
-            <div class="panel-heading">
-                <form action="." name="my form" method="POST">
-                    {% csrf_token %}
-                    <h3>写信给管理员</h3>
+        <div class="row">
+            <div class="col-2 first">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                      <a class="nav-link" href="/diary">查看日记</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="/diary/post2db">发布心情</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="/diary/post">记录日记</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="/diary/list">心情广场</a>
+                    </li>
+                </ul>
             </div>
-            <div class="panel-body">
-                {{forms.as_p}}
-            </div>
-            <div class="panel-footer">
-                <input type="submit" value="提交">
-                </form>
+            <div class="col-9">
+                {% if message %}
+                <div class="alert alert-warning">{{message}}</div>
+                    请留意您的邮箱:{{user_email}}的消息... <br />
+                {% endif %}
+                <div class="panel panel-primary">
+                    <div class="panel-heading" align="center">
+                            <h3>写信给管理员</h3>
+                    </div>
+                    <div class="panel-body">
+                        <form action="" name="myform" method="post">
+                            {% csrf_token %}
+                            <div align="left">
+                                <b>您的名字： </b>{{forms.user_name}}
+                                <hr />
+                                <b>您的城市: </b>&nbsp;&nbsp;{{forms.user_city}}
+                                <hr />
+                                <b>是否在校: </b>&nbsp;&nbsp;{{forms.user_school}}
+                                <hr />
+                                <b>您的邮箱: </b>{{forms.user_email}}
+                                <hr />
+                                {{forms.media}}
+                                <b>您的问题: </b>
+                                {{forms.user_message}}
+                                <hr />
+                                <b>验证码: </b>
+                                <br />
+                                {{forms.captcha}}
+                            </div>
+                            <div class="panel-footer">
+                                <input type="submit" class="btn btn-success" value="提交">
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
             </div>
         </div>
     </div>

@@ -10,6 +10,7 @@ class UserIDMiddlewares:
         self.get_response = get_response
 
     def __call__(self, request):
+        print(request)
 
         uid = self.generate_uid(request)
         request.uid = uid

@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import User
+from logininfo.models import CustomUser as User
 from filer.fields.image import FilerImageField
 
 # Create your models here.

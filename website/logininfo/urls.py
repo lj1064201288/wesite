@@ -26,5 +26,5 @@ urlpatterns = [
     # url(r'^mymood', lv.mymood, name="mymood"),
     # url(r'^mymood/(\d+)/(\w+)$', lv.mymood),
 
-    url(r'^admin/', include(admin.site.urls)),
+    # url(r'^admin/', include(admin.site.urls)),
 ]

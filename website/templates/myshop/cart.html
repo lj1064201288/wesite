@@ -5,11 +5,39 @@
     {% for message in messages %}
         <div class="alert alert-{{message.tags}}">{{message}}</div>
     {% endfor %}
+
+
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-2 first">
+            {% load account %}
+
+             <ul class="nav flex-column">
+                 <li class="nva-item">
+                     <a href="/myshop" class="nav-link">首页</a>
+                 </li>
+                 <li class="nav-item dropdown">
+                     <a href="/myshop" class="nav-link dropdown-toggle" data-toggle="dropdown">
+                         分类<span class="caret"></span>
+                     </a>
+                     <span class="caret"></span>
+                     <ul class="dropdown-menu">
+                         {% for cate in all_categries %}
+                         <li><a href="/myshop/{{cate.id}}" class="dropdown-item">{{cate.name}}</a></li>
+                         {% endfor %}
+                     </ul>
+                 </li>
+                 <li class="nav-item">
+                     <a href="/myshop/cart/" class="nav-link">查看购物车</a>
+                 </li>
+                 <li class="nav-item">
+                     <a href="/myshop/myorders/" class="nav-link">我的订单</a>
+                 </li>
+             </ul>
+        </div>
+        <div class="col-md-10">
             <div class="panel panel-default">
                 <div class="panel-heading" align="center">
-                    <h3>欢迎光临小熊猫商城 </h3>
+                    <h3>欢迎光临商城 </h3>
                     {% if user.is_authenticated%}
                         {% if user.socialaccount_set.all.0.extra_data.name %}
                             {{user.socialaccount_set.all.0.extra_data.name}} <br />
@@ -22,10 +50,6 @@
                     {% endif %}
                 </div>
             </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
             <div class="panel panel-info">
                 <div class="panel panel-heading" align="center">
                     <h4>我的购物车</h4>
@@ -59,7 +83,7 @@
                             </div>
                     {% if forloop.last %}
                         </table>
-                        <button class="btn btn-warning"><a href="/order">我要订购</a></button>
+                        <button class="btn btn-warning"><a href="/myshop/order">我要订购</a></button>
                     {% endif %}
                     {% empty %}
                         <em>购物车是空的</em>
@@ -70,8 +94,8 @@
                 </div>
             </div>
         </div>
+        </div>
     </div>
-
 </div>
 
 {% endblock %}

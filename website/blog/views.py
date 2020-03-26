@@ -30,6 +30,8 @@ class CommonViewMinxin:
         context.update({
             'sidebars': SideBar.get_all(),
             'owner': User.objects.all(),
+            'python_tag': Tag.get_python(),
+            'web_tag': Tag.get_web(),
 
         })
 
@@ -55,24 +57,24 @@ class PostDetailView(CommonViewMinxin, DetailView):
 
     def get(self, request, *args, **kwargs):
         response = super(PostDetailView, self).get(request, *args, **kwargs)
-        # Post.objects.filter(pk=self.object.id).update(pv=F('pv') + 1, uv=F('uv') + 1)
-        # self.handle_visited()
+        Post.objects.filter(pk=self.object.id).update(pv=F('pv') + 1, uv=F('uv') + 1)
+        self.handle_visited()
         return response
 
     def handle_visited(self):
         increase_pv = False
         increase_uv = False
-        uid = self.request.uid
-
-        pv_key = 'pv:%s:%s' % (uid, self.request.path)
-        uv_key = 'pv:%s:%s:%s' %(uid, str(date.today()), self.request.path)
-        if not cache.get(pv_key):
-            increase_pv = True
-            cache.set(pv_key, 1, 1*60)  # 1分钟有效
-
-        if not cache.get(uv_key):
-            increase_uv = True
-            cache.set(pv_key, 1, 24*60*60) # 24小时有效
+        # uid = self.request.uid
+        #
+        # pv_key = 'pv:%s:%s' % (uid, self.request.path)
+        # uv_key = 'pv:%s:%s:%s' %(uid, str(date.today()), self.request.path)
+        # if not cache.get(pv_key):
+        #     increase_pv = True
+        #     cache.set(pv_key, 1, 1*60)  # 1分钟有效
+        #
+        # if not cache.get(uv_key):
+        #     increase_uv = True
+        #     cache.set(pv_key, 1, 24*60*60) # 24小时有效
 
         if increase_pv and increase_uv:
             Post.objects.filter(pk=self.object.id).update(pv=F('pv') + 1, uv=F('uv') + 1)
@@ -156,19 +158,8 @@ class TagView(IndexView):
 
     def get_queryset(self):
         '''重写queryset, 根据标签过滤'''
-        qyeryset = super().get_queryset()
+        queryset = super().get_queryset()
+
         tag_id = self.kwargs.get('tag_id')
-        return qyeryset.filter(tag_id=tag_id)
+        return queryset.filter(tag_id=tag_id)
 
-from django.template.loader import get_template
-from django.template import RequestContext
-from .forms import PostForm
-
-def post(request):
-    template = get_template('post.html')
-    postform = PostForm()
-    request_content = RequestContext(request)
-    request_content.push(locals())
-    html = template.render(context=locals(), request=request)
-
-    return HttpResponse(html)

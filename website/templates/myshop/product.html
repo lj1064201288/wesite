@@ -6,27 +6,49 @@
         <div class="alert alert-{{message.tags}}">{{message}}</div>
     {% endfor %}
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-2 first">
+            {% load account %}
+             <ul class="nav flex-column">
+                 <li class="nva-item">
+                     <a href="/myshop" class="nav-link">首页</a>
+                 </li>
+                 <li class="nav-item dropdown">
+                     <a href="/myshop" class="nav-link dropdown-toggle" data-toggle="dropdown">
+                         分类<span class="caret"></span>
+                     </a>
+                     <span class="caret"></span>
+                     <ul class="dropdown-menu">
+                         {% for cate in all_categries %}
+                         <li><a href="/myshop/{{cate.id}}" class="dropdown-item">{{cate.name}}</a></li>
+                         {% endfor %}
+                     </ul>
+                 </li>
+                 <li class="nav-item">
+                     <a href="/myshop/cart/" class="nav-link">查看购物车</a>
+                 </li>
+             </ul>
+        </div>
+        <div class="col-10">
             <div class="panel panel-default">
                 <div class="panel-heading" align="center">
                     <h3>{{product.name | default:"产品编号错误" }}</h3>
                 </div>
             </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-sm-offset-1 col-sm-6">
-            <img src="{{product.image.url}}" alt="加载失败" width="100%">
-        </div>
-        <div class="col-sm-4">
-            <h2>{{product.name}}</h2>
-            <h3>
-                售价: {{product.price}}元 <br />
-                库存: {{product.stock}}
-            </h3>
-            <p>
-                {{product.description | linebreaks}}
-            </p>
+            <div class="row">
+                <div class="col-sm-offset-1 col-sm-6">
+                    <img src="{{product.image.url}}" alt="加载失败" width="100%">
+                </div>
+                <div class="col-sm-4">
+                    <h2>{{product.name}}</h2>
+                    <h3>
+                        售价: {{product.price}}元 <br />
+                        库存: {{product.stock}}
+                    </h3>
+                    <p>
+                        {{product.description | linebreaks}}
+                    </p>
+                </div>
+            </div>
         </div>
     </div>
 </div>

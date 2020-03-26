@@ -19,6 +19,26 @@
             background-image: url("{% static 'background/register.jpg' %}");
             height: 690px;
         }
+        #button_filed{
+            width: 60px;
+            height: 80px;
+            position: fixed;
+            top: 85%;
+            right: 30px;
+            color: brown;
+            background: whitesmoke;
+            font-size: 15px;
+            border: 3px red inset;
+        }
+        #suggest{
+            margin:0 0 2px 0;
+            border: 1px black solid;
+            font-weight: 700;
+        }
+        #top-back{
+            font-size: 20px;
+        }
+
     </style>
 
 </head>
@@ -28,6 +48,21 @@
 
     {% block content %}
     {% endblock %}
+    <div id="button_filed">
+        <a href="/diary/contact">
+            <div id="suggest" align="center">
+                投诉/建议
+                <span class="glyphicon glyphicon-send">
+            </span>
+        </div>
+        </a>
+        <a href="#">
+            <div align="center" id="top-back">
+                <span class="glyphicon glyphicon-eject"></span>
+            </div>
+        </a>
+    </div>
+
     {% include 'footer.html' %}
 </div>
 

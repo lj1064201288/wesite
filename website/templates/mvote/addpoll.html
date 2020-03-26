@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% block title %}添加投票项{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-2 first">
+            {% load account %}
+             <ul class="nav flex-column">
+                 <li class="nva-item">
+                     <a href="/mvote" class="nav-link">首页</a>
+                 </li>
+                 <li class="nav-item">
+                     <a href="/mvote/addpoll/" class="nav-link">新增/编辑投票</a>
+                 </li>
+             </ul>
+        </div>
+        <div class="col-9">
+            {% for message in messages %}
+                <div class="alert alert-{{message.tags}}">{{message}}</div>
+            {% endfor %}
+            <div class="row">
+                <div class="col-md-12">
+                   <div class="panel panel-success">
+                       <div class="panel-heading" align="center">
+                           <h3>添加投票项</h3>
+                       </div>
+                   </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <form action="." method="post">
+                        {% csrf_token %}
+                        {{forms.as_p}}
+                        <input type="submit" value="提交" class="btn btn-success">
+                    </form>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading" align="center">
+                            <h3>我的投票项</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                {% for poll in polls %}
+                    {% if forloop.first %}
+                        <div class="list-group">
+                    {% endif %}
+                            <li class="list-group-item list-group-item-primary">
+                                <a href="/mvote/addpoll/{{poll.id}}">{{poll.name}}</a>
+                                <div align="right" style="float: right">
+                                    <a href="/mvote/delpoll/{{poll.id}}">
+                                        <span class="glyphicon glyphicon-trash" style="font-size: 12px; color: red"></span>
+                                    </a>
+                                </div>
+                            </li>
+                            <br />
+                    {% empty %}
+                        <p>你还尚未发布话题</p>
+                    {% if forloop.last %}
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

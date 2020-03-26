@@ -7,7 +7,6 @@ from django.shortcuts import redirect
 from django.template import RequestContext
 from django.contrib import messages
 from cart.cart import Cart
-from allauth.account.decorators import verified_email_required
 from django.core.mail import send_mail
 
 import datetime
@@ -70,20 +69,19 @@ def product(request, product_id):
     return HttpResponse(html)
 
 def add_to_cart(request, product_id, quantity):
-
     product = Products.objects.get(id=product_id)
     cart = Cart(request)
     cart.add(product, product.price, quantity=quantity)
-    return redirect('myshop/')
+    return redirect('/myshop/')
 
 def remove_from_cart(request, product_id):
     product = Products.objects.get(id=product_id)
     cart = Cart(request)
     cart.remove(product)
 
-    return redirect('myshop/cart/')
+    return redirect('/myshop/cart/')
 
-@login_required
+@login_required(login_url='/login')
 def cart(request):
     if request.user.is_authenticated():
         username = request.user.username
@@ -100,7 +98,7 @@ def cart(request):
 
     return HttpResponse(html)
 
-@verified_email_required
+@login_required(login_url='/login')
 def order(request):
     if request.user.is_authenticated():
         username = request.user.username
@@ -119,12 +117,14 @@ def order(request):
             for item in cart:
                 OrderItem.objects.create(order=order, product=item.product, price=item.product.price, quantity=item.quantity)
                 email_messages = email_messages + "\n" + "产品名称:{}, 价格: {}, 数量:{}.".format(item.product, item.product.price, item.quantity)
-            email_messages += "\n以上共计{}元\n http://192.168.0.110:1314 \n 感谢您的订购!".format(cart.summary())
+            email_messages += "\n以上共计{}元\n 小商场 \n 感谢您的订购!".format(cart.summary())
             cart.clear()
             messages.add_message(request, messages.INFO, '订单已保存,我们会尽快为您处理!')
             send_mail("感谢您的订购", email_messages, 'lj1064201288@163.com', [request.user.email],)
-            send_mail('用户{}有人订购了产品'.format(request.user.username), email_messages, 'lj1064201288@163.com', ['lj1064201288@163.com'],)
-            return redirect('myshop/myorders')
+            send_mail('用户{}有人订购了产品'.format(request.user.username),
+                      email_messages + '\n用户地址:' + request.POST.get('address'),
+                      'lj1064201288@163.com', ['lj1064201288@163.com'],)
+            return redirect('/myshop/myorders')
     else:
         form = OrderForm()
 
@@ -135,7 +135,7 @@ def order(request):
 
     return HttpResponse(html)
 
-@login_required
+@login_required(login_url='/login')
 def my_orders(request):
     if request.user.is_authenticated():
         username = request.user.username
